@@ -6,7 +6,6 @@ import Walls from "./models/Walls"
 import Carpet from "./models/Carpet"
 import Lights from "./models/Lights"
 import ModelLoader from "./models/ModelLoader"
-import Bubbly from "./models/Bubbly"
 
 
 /**

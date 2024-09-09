@@ -5,5 +5,5 @@ This is a codebase for the web application of the Concept Start-up which is stag
 To quickly run the project:
 
 1. install nodejs
-2. install the dependecies using 'node install'
+2. install the dependecies using 'npm install'
 3. start the Vite server using 'npm run dev'
