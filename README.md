@@ -1,8 +1,9 @@
-# React + Vite
+# Concept Codebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a codebase for the web application of the Concept Start-up which is staging 3D furnature using React Three Fiber. The implementation is done using vite. The project currently consists of several filess which are responsible for rendering a 3D scene or rendering a button overlay. Communication between the two typer of functions is done using react hooks.
 
-Currently, two official plugins are available:
+To quickly run the project:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. install nodejs
+2. install the dependecies using 'node install'
+3. start the Vite server using 'npm run dev'
