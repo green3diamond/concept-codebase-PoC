@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #root {
@@ -78,4 +82,10 @@ h1 {
     border-radius: 30px;
     user-select: none;
     font-size: x-large;
+}
+
+@layer base {
+  :root {
+        --radius: 0.5rem;
+    }
 }

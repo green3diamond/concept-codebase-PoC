@@ -1,3 +1,4 @@
+import path from "path"
 import react from '@vitejs/plugin-react'
 import { transformWithEsbuild } from 'vite'
 
@@ -25,6 +26,11 @@ export default {
             },
         },
     ],
+    resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "./src"),
+        },
+      },
     server:
     {
         host: true, // Open to local network and display URL

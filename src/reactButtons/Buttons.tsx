@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Box from '@mui/material/Box'
-import { AppContext } from './AppContext'
+import { AppContext } from './AppContext.tsx'
 
 /**
  * A functional component that renders buttons based on the selected context.

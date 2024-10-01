@@ -3,11 +3,11 @@ import {
     Routes,
     Route,
 } from "react-router-dom"
-import Home from './Home'
-import Experience from './Experience'
+import Home from './Home.tsx'
+import Experience from './Experience.tsx'
 import { Canvas } from '@react-three/fiber'
 import { Analytics } from "@vercel/analytics/react"
-import Buttons from "./reactButtons/Buttons"
+import Navbar from "./components/Navbar.tsx"
 
 /**
  * The main application component.
@@ -46,7 +46,7 @@ export default function App() {
                                     <Experience />
                                 </Canvas>
                                 {/* Custom buttons component */}
-                                <Buttons />
+                                <Navbar />
                             </>
                         }
                     />

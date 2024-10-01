@@ -1,11 +1,11 @@
 import { Suspense, useRef } from "react"
 import { Text, OrbitControls, DragControls } from "@react-three/drei"
 
-import Floor from "./models/Floor"
-import Walls from "./models/Walls"
-import Carpet from "./models/Carpet"
-import Lights from "./models/Lights"
-import ModelLoader from "./models/ModelLoader"
+import Floor from "./models/Floor.tsx"
+import Walls from "./models/Walls.tsx"
+import Carpet from "./models/Carpet.tsx"
+import Lights from "./models/Lights.tsx"
+import ModelLoader from "./models/ModelLoader.tsx"
 
 
 /**

@@ -5,7 +5,7 @@ import React, { createContext, useState } from 'react';
  * 
  * @type {React.Context<any>}
  */
-export const AppContext = createContext();
+export const AppContext = createContext(null);
 
 /**
  * The AppProvider component.
