@@ -1,6 +1,6 @@
 import { useLoader } from "@react-three/fiber"
-import { MirroredRepeatWrapping, PlaneGeometry, RepeatWrapping, TextureLoader, Vector2 } from "three"
-import { MeshReflectorMaterial, useGLTF } from "@react-three/drei";
+import { RepeatWrapping, TextureLoader } from "three"
+import { MeshReflectorMaterial } from "@react-three/drei";
 
 /**
 * This function creates a floor mesh using React Three Fiber and Drei library.

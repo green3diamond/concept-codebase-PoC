@@ -1,5 +1,4 @@
 import { useGLTF } from "@react-three/drei"
-import { DragControls } from "@react-three/drei"
 /**
  * This function represents a 3D carpet model loaded from a GLB file.
  * It uses the useGLTF hook from the @react-three/drei library to load the model.

@@ -13,15 +13,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { AppContext } from './../reactButtons/AppContext.tsx'
+import { AppContext } from '../context/AppContext.tsx'
 
-
+/**
+ * The main render function for the Navbar component.
+ * 
+ * @returns {JSX.Element} - The rendered JSX for the Navbar component.
+ */
 export default function Navbar() {
+
   /**
-       * Deconstructs the necessary properties from the AppContext.
-       * 
-       * @type {{ selected: string, sharedState: object, setSharedState: SetStateAction<object> }}
-       */
+   * Deconstructs the necessary properties from the AppContext.
+   * 
+   * @type {{ selected: string, sharedState: object, setSharedState: SetStateAction<object> }}
+   */
   const { selected, sharedState, setSharedState } = useContext(AppContext)
 
 
@@ -41,27 +46,45 @@ export default function Navbar() {
   ]
 
   /**
-    * A function that updates the shared state with the selected button label.
-    * 
-    * @param {number} buttonLabel - The label of the selected button.
-    * @param {string} selected - The selected object.
-    */
-  const handleClick = (newColor, selected) => {
-    setSharedState(sharedState =>
-    ({
-      ...sharedState,
-      [selected]: newColor
-    }))
-  }
-
+   * A function that handles the click of a button for color change.
+   * 
+   * @param {string} color - The seelected color.
+   */
   const handleColorChange = (color: string) => {
     if (color === 'Red')
-      handleClick(1, selected)
+      handleColorClick(1, selected)
     else
-      handleClick(2, selected)
-
-    console.log(`${selected} Color changed to ${color}`)
+      handleColorClick(2, selected)
     setIsColorMenuOpen(false)
+  }
+
+  /**
+   * A function that updates the shared state with the selected button label.
+   * 
+   * @param {number} buttonLabel - The label of the selected button.
+   * @param {string} selected - The selected object.
+   */
+  const handleColorClick = (newColor, selected) => {
+    setSharedState(sharedState => {
+      const updateObject = sharedState[selected]
+      updateObject["color"] = newColor
+      return ({
+        ...sharedState,
+        [selected]: { ["color"]: newColor }
+      })
+    })
+  }
+
+  const handleRotate = () => {
+
+    setSharedState(sharedState => {
+      const updateObject = sharedState[selected]
+      updateObject["rotation"][2] = ( updateObject["rotation"][2] + Math.PI + Math.PI / 2 ) % (Math.PI *2  ) - Math.PI
+      return ({
+        ...sharedState,
+        [selected]: updateObject
+      })
+    })
   }
 
   const handleResize = (size: string) => {
@@ -125,7 +148,7 @@ export default function Navbar() {
         </DropdownMenu>
       )
     },
-    { icon: RotateCw, label: "Rotate", action: () => console.log("Rotate clicked") },
+    { icon: RotateCw, label: "Rotate", action: () => handleRotate() },
     { icon: RefreshCw, label: "Replace", action: () => console.log("Replace clicked") },
     { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
   ]

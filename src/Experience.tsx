@@ -48,13 +48,12 @@ export default function Experience() {
         >
             <ModelLoader
                 file={'./bubbly2c.glb'}
-                html={true}
+                html={false}
                 name={'bubbly'}
                 nodeNum={2}
                 occlude={[bubbly, modSofa]}
                 pos={[props.bubbly_x, -1, props.bubbly_z]}
                 reference={bubbly}
-                rot={[- Math.PI * 1 / 2, 0, -Math.PI * 1 / 2]}
                 size={1.4}
             />
         </DragControls>
@@ -72,7 +71,6 @@ export default function Experience() {
                 nodeNum={3}
                 pos={[props.modern_x, -1, props.modern_z]}
                 reference={modSofa}
-                rot={[0, 0, 0]}
                 size={2.5}
             />
         </DragControls>

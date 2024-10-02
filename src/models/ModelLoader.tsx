@@ -1,6 +1,6 @@
 import { useGLTF, Html } from "@react-three/drei"
 import { useEffect, useContext, useState, Suspense } from "react"
-import { AppContext } from "../reactButtons/AppContext"
+import { AppContext } from "../context/AppContext"
 import { Vector3 } from "three"
 
 import Placeholder from "./Placeholder"
@@ -13,7 +13,6 @@ import Placeholder from "./Placeholder"
  * @param {string} props.name - The name of the model.
  * @param {Object} props.reference - A reference to the model mesh.
  * @param {Object} props.pos - The position of the model.
- * @param {Object} props.rot - The rotation of the model.
  * @param {number} props.size - The size of the model.
  * @param {boolean} props.html - Whether to display HTML component with a message over the model.
  * @param {boolean} props.occlude - Whether to occlude the HTML content.
@@ -72,21 +71,30 @@ export default function ModelLoader(props) {
         //TODO runns at every props update, which is every render   
     }, [hovered])
 
-    return <>
-        <mesh
+    function rotateObject(){
+        console.log(finalObject.props.rotation)
+    }
+
+    useEffect(() => {
+        rotateObject()
+    }, [sharedState]) 
+
+    const finalObject = 
+        (<mesh
             name={props.name}
             ref={props.reference}
             position={props.pos}
-            rotation={props.rot}
             onPointerOver={(e) => ptrIn(e)} onPointerOut={(e) => ptrOut(e)}
             onDoubleClick={(e) => dblClick(e)}
+            rotation={sharedState[props.name]["rotation"]}
+            // TODO Doesnt update
         >
             <Suspense fallback={<Placeholder />}>
                 <mesh
                     castShadow={true}
                     name={props.name}
                     geometry={geomUpper}
-                    material={sharedState[props.name] === 1 ? materialsArray[0] : materialsArray[1]}
+                    material={sharedState[props.name]["color"] === 1 ? materialsArray[0] : materialsArray[1]}
                 />
                 {selected === props.name || hovered === props.name ? (<mesh
                     scale={boxSize}
@@ -109,6 +117,8 @@ export default function ModelLoader(props) {
             >
                 Move me!
             </Html> : null}
-        </mesh>
-    </>
+        </mesh>)
+ 
+    return finalObject
+           
 }

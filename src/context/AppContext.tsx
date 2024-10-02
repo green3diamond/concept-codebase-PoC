@@ -1,4 +1,5 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
+import { Params } from 'react-router-dom';
 
 /**
  * The AppContext object.
@@ -14,13 +15,24 @@ export const AppContext = createContext(null);
  * 
  * @returns {JSX.Element} - The JSX element representing the AppProvider component. Imprt the global children through this component.
  */
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children }: Params): JSX.Element => {
     /**
      * The shared state object. Contains information about the chosen materials of the different obejcts.
      * 
      * @type {Dictionary}
      */
-    const [sharedState, setSharedState] = useState({ "bubbly": 1, "sofa": 1, "modSofa": 1 })
+    const [sharedState, setSharedState] = useState(
+        {
+            "bubbly": {
+                "color": 1,
+                "rotation": [- Math.PI * 1 / 2, 0, -Math.PI * 1 / 2]
+            },
+            "modSofa": {
+                "color": 1,
+                "rotation": [0, 0, 0]
+            }
+        }
+    )
 
 
     /**
