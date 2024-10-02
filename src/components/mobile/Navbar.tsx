@@ -79,7 +79,7 @@ export default function MobileNavbar() {
 
     setSharedState(sharedState => {
       const updateObject = sharedState[selected]
-      updateObject["rotation"][2] = ( updateObject["rotation"][2] + Math.PI + Math.PI / 2 ) % (Math.PI *2  ) - Math.PI
+      updateObject["rotation"][1] = ( updateObject["rotation"][1] + Math.PI + Math.PI / 2 ) % (Math.PI *2  ) - Math.PI
       return ({
         ...sharedState,
         [selected]: updateObject

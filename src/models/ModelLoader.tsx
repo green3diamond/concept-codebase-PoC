@@ -2,8 +2,8 @@ import { useGLTF, Html } from "@react-three/drei"
 import { useEffect, useContext, useState, Suspense } from "react"
 import { AppContext } from "../context/AppContext"
 import { Vector3 } from "three"
-
 import Placeholder from "./Placeholder"
+import { useFrame } from "@react-three/fiber"
 
 /**
  * A React component to load and display 3D models.
@@ -67,19 +67,18 @@ export default function ModelLoader(props) {
     }
 
     useEffect(() => {
-        computeAndSetBoundingBox(geomUpper, setBoxSize, setBoxCenter)
-        //TODO runns at every props update, which is every render   
-    }, [hovered])
-
-    function rotateObject(){
-        console.log(finalObject.props.rotation)
-    }
+        const rot = sharedState[props.name]["rotation"]
+        if (props.reference.current && rot) {
+            props.reference.current.rotation.set(rot[0], rot[1], rot[2])
+        }
+    }, [[], sharedState])
 
     useEffect(() => {
-        rotateObject()
-    }, [sharedState]) 
+        computeAndSetBoundingBox(geomUpper, setBoxSize, setBoxCenter)
+    }, [[],sharedState])
+    
 
-    const finalObject = 
+    const finalObject =
         (<mesh
             name={props.name}
             ref={props.reference}
@@ -87,7 +86,7 @@ export default function ModelLoader(props) {
             onPointerOver={(e) => ptrIn(e)} onPointerOut={(e) => ptrOut(e)}
             onDoubleClick={(e) => dblClick(e)}
             rotation={sharedState[props.name]["rotation"]}
-            // TODO Doesnt update
+        // TODO Doesnt update
         >
             <Suspense fallback={<Placeholder />}>
                 <mesh
@@ -118,7 +117,7 @@ export default function ModelLoader(props) {
                 Move me!
             </Html> : null}
         </mesh>)
- 
+
     return finalObject
-           
+
 }
