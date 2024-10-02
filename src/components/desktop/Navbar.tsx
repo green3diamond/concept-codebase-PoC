@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { PaintBucket, RotateCw, Replace, Trash2, MoreHorizontal, Menu, Ruler, LayoutGrid, Maximize, Lightbulb } from "lucide-react"
+import { PaintBucket, RotateCw, Replace, Trash2, Menu, Ruler, LayoutGrid, Maximize, Lightbulb } from "lucide-react"
 import { Button } from "@/components/mobile/ui/button.tsx"
 import {
   DropdownMenu,
@@ -9,7 +9,6 @@ import {
 } from "@/components/mobile/ui/dropdown-menu.tsx"
 import {
   Tooltip,
-  TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/mobile/ui/tooltip.tsx"
