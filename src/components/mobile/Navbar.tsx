@@ -1,26 +1,26 @@
 import { useState, useContext } from "react"
-import { Palette, RotateCw, RefreshCw, Trash2, MoreHorizontal, Move } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { PaintBucket, RotateCw, Replace, Trash2, MoreHorizontal, Ruler } from "lucide-react"
+import { Button } from "@/components/mobile/ui/button.tsx"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/mobile/ui/dropdown-menu.tsx"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { AppContext } from '../context/AppContext.tsx'
+} from "@/components/mobile/ui/tooltip.tsx"
+import { AppContext } from '../../context/AppContext.tsx'
 
 /**
  * The main render function for the Navbar component.
  * 
  * @returns {JSX.Element} - The rendered JSX for the Navbar component.
  */
-export default function Navbar() {
+export default function MobileNavbar() {
 
   /**
    * Deconstructs the necessary properties from the AppContext.
@@ -94,7 +94,7 @@ export default function Navbar() {
 
   const navItems = [
     {
-      icon: Palette,
+      icon: PaintBucket,
       label: "Change Color",
       action: () => setIsColorMenuOpen(true),
       dropdown: (
@@ -106,7 +106,7 @@ export default function Navbar() {
               className="rounded-full"
               aria-label="Change Color"
             >
-              <Palette className="h-5 w-5" aria-hidden="true" />
+              <PaintBucket className="h-5 w-5" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -123,8 +123,8 @@ export default function Navbar() {
       )
     },
     {
-      icon: Move,
-      label: "Resize",
+      icon: Ruler,
+      label: "Size",
       action: () => setIsResizeMenuOpen(true),
       dropdown: (
         <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
@@ -135,7 +135,7 @@ export default function Navbar() {
               className="rounded-full"
               aria-label="Resize"
             >
-              <Move className="h-5 w-5" aria-hidden="true" />
+              <Ruler className="h-5 w-5" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -149,14 +149,15 @@ export default function Navbar() {
       )
     },
     { icon: RotateCw, label: "Rotate", action: () => handleRotate() },
-    { icon: RefreshCw, label: "Replace", action: () => console.log("Replace clicked") },
+    { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
     { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
   ]
 
+  
   const moreOptions = [
-    { label: "Duplicate", action: () => console.log("Duplicate clicked") },
-    { label: "Flip", action: () => console.log("Flip clicked") },
-    { label: "Group", action: () => console.log("Group clicked") },
+    { label: "Change room size", action: () => console.log("Change room size clicked") },
+    { label: "Edit room layout", action: () => console.log("Edit room layout clicked") },
+    { label: "Edit room lighting", action: () => console.log("Edit room lighting clicked") },
   ]
 
   if (selected !== "")

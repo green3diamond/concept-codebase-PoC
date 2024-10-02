@@ -7,13 +7,15 @@ import Home from './Home.tsx'
 import Experience from './Experience.tsx'
 import { Canvas } from '@react-three/fiber'
 import { Analytics } from "@vercel/analytics/react"
-import Navbar from "./components/Navbar.tsx"
+import AdaptiveNavbar from "./components/AdaptiveNavbar.tsx"
+import withIsMobileViewProvider from "./context/withIsMobileVIewProvider.tsx";
+
 
 /**
  * The main application component.
  * @returns {JSX.Element} - The JSX element representing the application.
  */
-export default function App() {
+function App() {
 
     return (
         <>
@@ -46,7 +48,7 @@ export default function App() {
                                     <Experience />
                                 </Canvas>
                                 {/* Custom buttons component */}
-                                <Navbar />
+                                <AdaptiveNavbar />
                             </>
                         }
                     />
@@ -56,4 +58,4 @@ export default function App() {
     )
 }
 
-App
+export default withIsMobileViewProvider(App)

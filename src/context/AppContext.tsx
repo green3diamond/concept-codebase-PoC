@@ -6,7 +6,7 @@ import { Params } from 'react-router-dom';
  * 
  * @type {React.Context<any>}
  */
-export const AppContext = createContext(null);
+export const AppContext = createContext({});
 
 /**
  * The AppProvider component.
@@ -50,7 +50,14 @@ export const AppProvider = ({ children }: Params): JSX.Element => {
     const [hovered, hover] = useState("")
 
     return (
-        <AppContext.Provider value={{ sharedState, setSharedState, selected, setSelected, hovered, hover }}>
+        <AppContext.Provider value={{
+            sharedState,
+            setSharedState,
+            selected,
+            setSelected,
+            hovered,
+            hover
+        }}>
             {children}
         </AppContext.Provider>
     )
