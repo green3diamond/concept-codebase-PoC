@@ -19,7 +19,7 @@ export default function Experience() {
     const modSofa = useRef()
     // Object properties for positioning and scaling
     const props = {
-        bubbly_x: 3,
+        bubbly_x: -2,
         bubbly_z: 2,
         cube_x: 2,
         cube_z: 2,
@@ -47,12 +47,12 @@ export default function Experience() {
             dragLimits={[[-props.bubbly_x - 4, -props.bubbly_x + 4], , [-props.bubbly_z - 4, -props.bubbly_z + 4]]}
         >
             <ModelLoader
-                file={'./bubbly2c.glb'}
+                file={'./bubblyRot.glb'}
                 html={false}
                 name={'bubbly'}
                 nodeNum={2}
                 occlude={[bubbly, modSofa]}
-                pos={[props.bubbly_x, -1, props.bubbly_z]}
+                pos={[props.bubbly_x, -0.25, props.bubbly_z]}
                 reference={bubbly}
                 size={1.4}
             />

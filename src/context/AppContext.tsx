@@ -25,7 +25,8 @@ export const AppProvider = ({ children }: Params): JSX.Element => {
         {
             "bubbly": {
                 "color": 1,
-                "rotation": [- Math.PI * 1 / 2, 0, -Math.PI * 1 / 2]
+                // "rotation": [- Math.PI * 1 / 2, 0, -Math.PI * 1 / 2]
+                "rotation": [0, 0, 0]
             },
             "modSofa": {
                 "color": 1,
