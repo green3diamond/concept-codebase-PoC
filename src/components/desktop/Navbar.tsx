@@ -35,8 +35,8 @@ export default function DesktopNavbar() {
   const [isResizeMenuOpen, setIsResizeMenuOpen] = useState(false)
 
   const colorOptions = [
-    { label: "Red", color: "bg-red-500" },
-    { label: "Green", color: "bg-green-500" }
+    { label: "Dark", color: "bg-gray-500" },
+    { label: "Colorfull", color: "bg-gradient-to-l from-yellow-500 to-pink-500" }
   ]
 
   const sizeOptions = [
@@ -51,7 +51,7 @@ export default function DesktopNavbar() {
    * @param {string} color - The seelected color.
    */
   const handleColorChange = (color: string) => {
-    if (color === 'Red')
+    if (color === 'Colorfull')
       handleColorClick(1, selected)
     else
       handleColorClick(2, selected)
@@ -65,27 +65,41 @@ export default function DesktopNavbar() {
    * @param {string} selected - The selected object.
    */
   const handleColorClick = (newColor, selected) => {
-    setSharedState(sharedState => {
-      const updateObject = sharedState[selected]
-      updateObject["color"] = newColor
-      return ({
-        ...sharedState,
-        [selected]: { ["color"]: newColor }
-      })
-    })
-  }
+    setSharedState(prevState => {
+      if (!selected || !prevState[selected]) {
+        return prevState; // Return unchanged state if no valid selection
+      }
+  
+      return {
+        ...prevState,
+        [selected]: {
+          ...prevState[selected], // Preserve other properties like rotation
+          color: newColor
+        }
+      };
+    });
+  };
 
   const handleRotate = () => {
+    setSharedState(prevState => {
+      if (!selected || !prevState[selected]) {
+        return prevState; // Return unchanged state if no valid selection
+      }
+  
+      const selectedObject = { ...prevState[selected] };
+      const newRotation = [...selectedObject.rotation];
+      newRotation[1] = (newRotation[1] + Math.PI + Math.PI / 2) % (Math.PI * 2) - Math.PI;
+  
+      return {
+        ...prevState,
+        [selected]: {
+          ...selectedObject,
+          rotation: newRotation
+        }
+      };
+    });
+  };
 
-    setSharedState(sharedState => {
-      const updateObject = sharedState[selected]
-      updateObject["rotation"][1] = (updateObject["rotation"][1] + Math.PI + Math.PI / 2) % (Math.PI * 2) - Math.PI
-      return ({
-        ...sharedState,
-        [selected]: updateObject
-      })
-    })
-  }
 
   const handleResize = (size: string) => {
     console.log(`Couch resized to ${size}`)
@@ -126,36 +140,36 @@ export default function DesktopNavbar() {
         </DropdownMenu>
       )
     },
-    {
-      icon: Ruler,
-      label: "Size",
-      action: () => setIsResizeMenuOpen(true),
-      dropdown: (
-        <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="rect-full"
-              aria-label="Resize"
-            >
-              <Ruler className="h-5 w-5 mr-2" aria-hidden="true" />
-              <span className="text-sm">{"Size"}</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-40">
-            {sizeOptions.map((option, index) => (
-              <DropdownMenuItem key={index} onSelect={() => handleResize(option.size)}>
-                <span>{option.label}</span>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    // {
+    //   icon: Ruler,
+    //   label: "Size",
+    //   action: () => setIsResizeMenuOpen(true),
+    //   dropdown: (
+    //     <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
+    //       <DropdownMenuTrigger asChild>
+    //         <Button
+    //           variant="ghost"
+    //           size="sm"
+    //           className="rect-full"
+    //           aria-label="Resize"
+    //         >
+    //           <Ruler className="h-5 w-5 mr-2" aria-hidden="true" />
+    //           <span className="text-sm">{"Size"}</span>
+    //         </Button>
+    //       </DropdownMenuTrigger>
+    //       <DropdownMenuContent className="w-40">
+    //         {sizeOptions.map((option, index) => (
+    //           <DropdownMenuItem key={index} onSelect={() => handleResize(option.size)}>
+    //             <span>{option.label}</span>
+    //           </DropdownMenuItem>
+    //         ))}
+    //       </DropdownMenuContent>
+    //     </DropdownMenu>
+    //   )
+    // },
     { icon: RotateCw, label: "Rotate", action: () => handleRotate() },
-    { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
-    { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
+    // { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
+    // { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
   ]
 
   const moreOptions = [
@@ -192,7 +206,7 @@ export default function DesktopNavbar() {
                   )}
                 </li>
               ))}
-              <li>
+              {/* <li>
                 <DropdownMenu open={isMoreMenuOpen} onOpenChange={setIsMoreMenuOpen}>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -218,7 +232,7 @@ export default function DesktopNavbar() {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>

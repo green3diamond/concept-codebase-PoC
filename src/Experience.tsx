@@ -47,7 +47,7 @@ export default function Experience() {
             dragLimits={[[-props.bubbly_x - 4, -props.bubbly_x + 4], , [-props.bubbly_z - 4, -props.bubbly_z + 4]]}
         >
             <ModelLoader
-                file={'./bubblyRot.glb'}
+                file={'./bubblyRot2.glb'}
                 html={false}
                 name={'bubbly'}
                 nodeNum={2}
@@ -65,10 +65,10 @@ export default function Experience() {
 
         >
             <ModelLoader
-                file={'./modernSofa.glb'}
+                file={'./modernSofa2.glb'}
                 html={false}
                 name={'modSofa'}
-                nodeNum={3}
+                nodeNum={2}
                 pos={[props.modern_x, -1, props.modern_z]}
                 reference={modSofa}
                 size={2.5}

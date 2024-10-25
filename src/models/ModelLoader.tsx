@@ -5,6 +5,7 @@ import { Vector3 } from "three"
 import Placeholder from "./Placeholder"
 import { useFrame } from "@react-three/fiber"
 
+
 /**
  * A React component to load and display 3D models.
  * @param {Object} props - The properties of the component.
@@ -24,6 +25,11 @@ export default function ModelLoader(props) {
     const [boxSize, setBoxSize] = useState(new Vector3(1, 1, 1))
     const [boxCenter, setBoxCenter] = useState(new Vector3(0, 0, 0))
     const { nodes, materials } = useGLTF(props.file)
+    
+    // useEffect(() => {
+    // console.log(nodes)
+    // console.log(materials)
+    // }, [])
 
     // convert the node object to an array
     const nodesArray = Object.keys(nodes).map(key => nodes[key])

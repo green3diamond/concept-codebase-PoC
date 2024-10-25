@@ -35,9 +35,10 @@ export default function MobileNavbar() {
   const [isResizeMenuOpen, setIsResizeMenuOpen] = useState(false)
 
   const colorOptions = [
-    { label: "Red", color: "bg-red-500" },
-    { label: "Green", color: "bg-green-500" }
+    { label: "Dark", color: "bg-gray-500" },
+    { label: "Colorfull", color: "bg-gradient-to-l from-yellow-500 to-pink-500" }
   ]
+
 
   const sizeOptions = [
     { label: "Small (2-seater)", size: "Small" },
@@ -51,7 +52,7 @@ export default function MobileNavbar() {
    * @param {string} color - The seelected color.
    */
   const handleColorChange = (color: string) => {
-    if (color === 'Red')
+    if (color === 'Colorfull')
       handleColorClick(1, selected)
     else
       handleColorClick(2, selected)
@@ -122,35 +123,35 @@ export default function MobileNavbar() {
         </DropdownMenu>
       )
     },
-    {
-      icon: Ruler,
-      label: "Size",
-      action: () => setIsResizeMenuOpen(true),
-      dropdown: (
-        <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              aria-label="Resize"
-            >
-              <Ruler className="h-5 w-5" aria-hidden="true" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {sizeOptions.map((option, index) => (
-              <DropdownMenuItem key={index} onSelect={() => handleResize(option.size)}>
-                <span>{option.label}</span>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    // {
+    //   icon: Ruler,
+    //   label: "Size",
+    //   action: () => setIsResizeMenuOpen(true),
+    //   dropdown: (
+    //     <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
+    //       <DropdownMenuTrigger asChild>
+    //         <Button
+    //           variant="ghost"
+    //           size="icon"
+    //           className="rounded-full"
+    //           aria-label="Resize"
+    //         >
+    //           <Ruler className="h-5 w-5" aria-hidden="true" />
+    //         </Button>
+    //       </DropdownMenuTrigger>
+    //       <DropdownMenuContent align="end">
+    //         {sizeOptions.map((option, index) => (
+    //           <DropdownMenuItem key={index} onSelect={() => handleResize(option.size)}>
+    //             <span>{option.label}</span>
+    //           </DropdownMenuItem>
+    //         ))}
+    //       </DropdownMenuContent>
+    //     </DropdownMenu>
+    //   )
+    // },
     { icon: RotateCw, label: "Rotate", action: () => handleRotate() },
-    { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
-    { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
+    // { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
+    // { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
   ]
 
   
@@ -190,7 +191,7 @@ export default function MobileNavbar() {
                   )}
                 </li>
               ))}
-              <li>
+              {/* <li>
                 <DropdownMenu open={isMoreMenuOpen} onOpenChange={setIsMoreMenuOpen}>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -217,7 +218,7 @@ export default function MobileNavbar() {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>
