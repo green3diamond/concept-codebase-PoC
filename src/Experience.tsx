@@ -88,7 +88,7 @@ export default function Experience() {
             maxWidth={2}
             textAlign="center"
         >
-            Concept 🪑
+            Concept
         </Text>
 
 
