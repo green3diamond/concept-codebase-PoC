@@ -1,5 +1,9 @@
 import { Suspense, useRef } from "react"
-import { Text, OrbitControls, DragControls } from "@react-three/drei"
+import { Image, Text, OrbitControls, DragControls } from "@react-three/drei"
+import { useLoader } from '@react-three/fiber'
+import { TextureLoader } from 'three'
+
+// Inside your component:
 
 import Floor from "./models/Floor.tsx"
 import Walls from "./models/Walls.tsx"
@@ -26,6 +30,8 @@ export default function Experience() {
         modern_x: 0,
         modern_z: -3
     }
+    const texture = useLoader(TextureLoader, '/logoExp.svg')
+
 
     return <>
         {/* Controls for the camera */}
@@ -44,7 +50,7 @@ export default function Experience() {
         {/* Bubbly chair model */}
         <DragControls
             axisLock="y"
-            dragLimits={[[-props.bubbly_x - 4, -props.bubbly_x + 4], , [-props.bubbly_z - 4, -props.bubbly_z + 4]]}
+            dragLimits={[[-props.bubbly_x - 4, -props.bubbly_x + 3], , [-props.bubbly_z - 4, -props.bubbly_z + 3]]}
         >
             <ModelLoader
                 file={'./bubblyRot2.glb'}
@@ -81,16 +87,9 @@ export default function Experience() {
         <Suspense><Carpet /></Suspense>
 
         {/* Backgorund text */}
-        <Text
-            fontSize={1}
-            color="black"
-            position={[0, 2, -4.9]}
-            maxWidth={2}
-            textAlign="center"
-        >
-            Concept
-        </Text>
-
-
+        <Image url='/logoExp.svg'
+            transparent
+            scale={[texture.image.width / 100, texture.image.height / 100, 1]}
+            position={[0, 2, -4.9]} />
     </>
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import conceptLogo from '/smallLogo.jpeg'
+import smallLogo from '/smallLogo.jpeg'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
             <div id="outsideRoot">
                 <div id="logos">
                     <div className="flex items-center justify-center">
-                        <img src={conceptLogo} className="logo flex items-center" alt="Concept logo" />
+                        <img src={smallLogo} className="logo flex items-center" alt="Concept logo" />
                     </div>
                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                         <div className="p-4 bg-slate-50 border-b border-slate-200">
@@ -41,9 +41,9 @@ export default function Home() {
                         </div>
                         <div className="p-4 flex justify-center">
                             <Link className="flex items-center justify-center" to="/appdemo">
-                                <Button variant="outline"
-                                    size="sm"
-                                    className="rect-full">
+                                <Button size="sm"
+                                    className="rect-full"
+                                    >
                                     Enter Playground
                                 </Button>
                             </Link>
