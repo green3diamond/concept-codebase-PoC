@@ -140,36 +140,7 @@ export default function DesktopNavbar() {
         </DropdownMenu>
       )
     },
-    // {
-    //   icon: Ruler,
-    //   label: "Size",
-    //   action: () => setIsResizeMenuOpen(true),
-    //   dropdown: (
-    //     <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
-    //       <DropdownMenuTrigger asChild>
-    //         <Button
-    //           variant="ghost"
-    //           size="sm"
-    //           className="rect-full"
-    //           aria-label="Resize"
-    //         >
-    //           <Ruler className="h-5 w-5 mr-2" aria-hidden="true" />
-    //           <span className="text-sm">{"Size"}</span>
-    //         </Button>
-    //       </DropdownMenuTrigger>
-    //       <DropdownMenuContent className="w-40">
-    //         {sizeOptions.map((option, index) => (
-    //           <DropdownMenuItem key={index} onSelect={() => handleResize(option.size)}>
-    //             <span>{option.label}</span>
-    //           </DropdownMenuItem>
-    //         ))}
-    //       </DropdownMenuContent>
-    //     </DropdownMenu>
-    //   )
-    // },
     { icon: RotateCw, label: "Rotate", action: () => handleRotate() },
-    // { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
-    // { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
   ]
 
   const moreOptions = [
@@ -206,33 +177,6 @@ export default function DesktopNavbar() {
                   )}
                 </li>
               ))}
-              {/* <li>
-                <DropdownMenu open={isMoreMenuOpen} onOpenChange={setIsMoreMenuOpen}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="rect-full"
-                          aria-label="More options"
-                        >
-                          <Menu className="h-5 w-5 mr-2" aria-hidden="true" />
-                          <span className="text-sm">{"More"}</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                    </TooltipTrigger>
-                  </Tooltip>
-                  <DropdownMenuContent align="end">
-                    {moreOptions.map((option, optionIndex) => (
-                      <DropdownMenuItem key={optionIndex} onSelect={option.action}>
-                        <option.icon className="h-4 w-4 mr-2" />
-                        <span>{option.label}</span>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </li> */}
             </ul>
           </nav>
         </div>

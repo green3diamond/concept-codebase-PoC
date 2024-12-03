@@ -123,35 +123,7 @@ export default function MobileNavbar() {
         </DropdownMenu>
       )
     },
-    // {
-    //   icon: Ruler,
-    //   label: "Size",
-    //   action: () => setIsResizeMenuOpen(true),
-    //   dropdown: (
-    //     <DropdownMenu open={isResizeMenuOpen} onOpenChange={setIsResizeMenuOpen}>
-    //       <DropdownMenuTrigger asChild>
-    //         <Button
-    //           variant="ghost"
-    //           size="icon"
-    //           className="rounded-full"
-    //           aria-label="Resize"
-    //         >
-    //           <Ruler className="h-5 w-5" aria-hidden="true" />
-    //         </Button>
-    //       </DropdownMenuTrigger>
-    //       <DropdownMenuContent align="end">
-    //         {sizeOptions.map((option, index) => (
-    //           <DropdownMenuItem key={index} onSelect={() => handleResize(option.size)}>
-    //             <span>{option.label}</span>
-    //           </DropdownMenuItem>
-    //         ))}
-    //       </DropdownMenuContent>
-    //     </DropdownMenu>
-    //   )
-    // },
     { icon: RotateCw, label: "Rotate", action: () => handleRotate() },
-    // { icon: Replace, label: "Replace", action: () => console.log("Replace clicked") },
-    // { icon: Trash2, label: "Remove", action: () => console.log("Remove clicked") },
   ]
 
   
@@ -191,34 +163,6 @@ export default function MobileNavbar() {
                   )}
                 </li>
               ))}
-              {/* <li>
-                <DropdownMenu open={isMoreMenuOpen} onOpenChange={setIsMoreMenuOpen}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="rounded-full"
-                          aria-label="More options"
-                        >
-                          <MoreHorizontal className="h-5 w-5" aria-hidden="true" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>More options</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  <DropdownMenuContent align="end">
-                    {moreOptions.map((option, optionIndex) => (
-                      <DropdownMenuItem key={optionIndex} onSelect={option.action}>
-                        <span>{option.label}</span>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </li> */}
             </ul>
           </nav>
         </div>
