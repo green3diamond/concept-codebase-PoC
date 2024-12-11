@@ -38,6 +38,18 @@ import * as THREE from "'three'"
 import { ScrollArea } from "@/components/new_stable/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/new_stable/ui/tooltip"
 
+/**
+ * Renders a basic 3D room structure using Three.js meshes.
+ * 
+ * This function creates a group containing three meshes:
+ * 1. A floor plane
+ * 2. A left wall
+ * 3. A back wall
+ * 
+ * The room is constructed with standard dimensions and light gray colors.
+ * 
+ * @returns {JSX.Element} A group element containing the room's meshes.
+ */
 function Room() {
   return (
     <group>
@@ -57,9 +69,18 @@ function Room() {
   )
 }
 
+/**
+* Renders a circular button with an edit icon.
+* This button is designed to be used as a floating action button for editing purposes.
+*
+* @param {Object} props - The component props.
+* @param {Function} props.onClick - The function to be called when the button is clicked.
+* @returns {JSX.Element} A Button component styled as a circular edit button.
+*/
 function BadgeButton({ onClick }) {
   return (
     <Button
+
       variant="secondary"
       size="icon"
       className="w-8 h-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-200"
@@ -71,6 +92,19 @@ function BadgeButton({ onClick }) {
   )
 }
 
+/**
+* A function to render a couch in a 3D scene.
+*
+* @param color - The color of the couch.
+* @param rotation - The rotation of the couch in radians.
+* @param size - The size of the couch.
+* @param position - The position of the couch in the 3D scene.
+* @param onDrag - A callback function to handle the drag event.
+* @param onDragStart - A callback function to handle the drag start event.
+* @param onDragEnd - A callback function to handle the drag end event.
+* @param onModelClick - A callback function to handle the model click event.
+* @param onEditClick - A callback function to handle the edit click event.
+*/
 function Couch({ color, rotation, size, position, onDrag, onDragStart, onDragEnd, onModelClick, onEditClick }) {
   const group = useRef()
   const { camera, raycaster, gl } = useThree()
@@ -202,6 +236,22 @@ function Couch({ color, rotation, size, position, onDrag, onDragStart, onDragEnd
   )
 }
 
+/**
+* FloatingMenu component for displaying and managing a 3D model of a couch in a virtual reality environment.
+*
+* @param couchName - The name of the couch model.
+* @param couchColor - The current color of the couch model.
+* @param onRotate - Callback function to handle rotation of the couch model.
+* @param onColorChange - Callback function to handle color change of the couch model.
+* @param onRemove - Callback function to handle removal of the couch model.
+* @param onSizeChange - Callback function to handle size change of the couch model.
+* @param menuState - The current state of the floating menu ('open' or 'closed').
+* @param onToggleMenu - Callback function to handle toggling the menu state.
+* @param activeAccordion - The currently active accordion item.
+* @param setActiveAccordion - Function to set the active accordion item.
+*
+* @returns {JSX.Element} - The FloatingMenu component.
+*/
 function FloatingMenu({ couchName, couchColor, onRotate, onColorChange, onRemove, onSizeChange, menuState, onToggleMenu, activeAccordion, setActiveAccordion }) {
   const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false)
 
@@ -320,6 +370,14 @@ function FloatingMenu({ couchName, couchColor, onRotate, onColorChange, onRemove
   )
 }
 
+/**
+* A component for browsing and selecting furniture items.
+*
+* @param isOpen - A boolean indicating whether the dialog is open.
+* @param onClose - A function to be called when the dialog is closed.
+*
+* @returns {JSX.Element} - The FurnitureBrowser component.
+*/
 function FurnitureBrowser({ isOpen, onClose }) {
   const [selectedCategory, setSelectedCategory] = useState("sofas")
 
@@ -431,6 +489,14 @@ function FurnitureBrowser({ isOpen, onClose }) {
   )
 }
 
+/**
+* A dialog component for editing room lighting settings.
+*
+* @param {boolean} open - Indicates whether the dialog is open.
+* @param {Function} onOpenChange - A function to handle changes to the open state.
+*
+* @returns {JSX.Element} - A dialog component for editing room lighting settings.
+*/
 function LightingSettingsDialog({ open, onOpenChange }) {
   const [selectedLighting, setSelectedLighting] = useState("daylight")
 
@@ -482,6 +548,14 @@ function LightingSettingsDialog({ open, onOpenChange }) {
   )
 }
 
+/**
+ * A dialog component for inspiring users with a catchy message and a subtitle.
+ *
+ * @param {boolean} isOpen - Indicates whether the dialog is open.
+ * @param {Function} onOpenChange - A function to handle changes to the open state.
+ *
+ * @returns {JSX.Element} - A dialog component for inspiring users.
+ */
 function InspireDialog({ isOpen, onClose }) {
   const [displayedText, setDisplayedText] = useState("")
   const [showSubtitle, setShowSubtitle] = useState(false)
@@ -552,6 +626,16 @@ function InspireDialog({ isOpen, onClose }) {
   )
 }
 
+/**
+ * A floating navigation bar component for the 3D scene.
+ *
+ * @param {boolean} isFurnitureBrowserOpen - Indicates whether the furniture browser is open.
+ * @param {Function} setIsFurnitureBrowserOpen - A function to set the open state of the furniture browser.
+ * @param {boolean} isInspireDialogOpen - Indicates whether the inspire dialog is open.
+ * @param {Function} setIsInspireDialogOpen - A function to set the open state of the inspire dialog.
+ *
+ * @returns {JSX.Element} - A floating navigation bar component.
+ */
 function FloatingNavigation({ isFurnitureBrowserOpen, setIsFurnitureBrowserOpen, isInspireDialogOpen, setIsInspireDialogOpen }) {
   return (
     <>
@@ -578,6 +662,11 @@ function FloatingNavigation({ isFurnitureBrowserOpen, setIsFurnitureBrowserOpen,
   )
 }
 
+/**
+ * A dropdown menu component for room settings.
+ *
+ * @returns {JSX.Element} - A dropdown menu component for room settings.
+ */
 function RoomSettingsDropdown() {
   const [isLightingDialogOpen, setIsLightingDialogOpen] = useState(false)
 
@@ -611,6 +700,12 @@ function RoomSettingsDropdown() {
   )
 }
 
+
+/**
+ * A dialog component for editing room lighting settings.
+ *
+ * @param {boolean} isOpen - Indicates whether the dialog is open.
+ */
 export function 3dSceneWithNav() {
   const [rotation, setRotation] = useState(0)
   const [couchColor, setCouchColor] = useState("'#8A9A5B'")

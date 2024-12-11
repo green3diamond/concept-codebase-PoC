@@ -1,5 +1,4 @@
-import { useState, useContext } from "react"
-import { PaintBucket, RotateCw, Replace, Trash2, Menu, Ruler, LayoutGrid, Maximize, Lightbulb } from "lucide-react"
+import { Avatar, AvatarFallback } from "@/components/desktop/ui/avatar"
 import { Button } from "@/components/mobile/ui/button.tsx"
 import {
   DropdownMenu,
@@ -12,8 +11,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/mobile/ui/tooltip.tsx"
+import { LayoutGrid, Lightbulb, Maximize, PaintBucket, RotateCw } from "lucide-react"
+import { useContext, useState } from "react"
 import { AppContext } from '../../context/AppContext.tsx'
-import { Avatar, AvatarFallback } from "@/components/desktop/ui/avatar"
 
 /**
  * The main render function for the Navbar component.
@@ -27,7 +27,7 @@ export default function DesktopNavbar() {
    * 
    * @type {{ selected: string, sharedState: object, setSharedState: SetStateAction<object> }}
    */
-  const { selected, sharedState, setSharedState } = useContext(AppContext)
+  const [ selected, sharedState, setSharedState ] = useContext(AppContext)
 
 
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
