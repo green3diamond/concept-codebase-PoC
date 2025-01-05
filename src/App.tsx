@@ -25,12 +25,10 @@ function App() {
                 <Routes>
                     {/* This route is for home component with exact path "/", in component props we passes the imported component*/}
                     <Route
-                        exact
                         path="/"
                         element={<Home />}
                     />
                     <Route
-                        exact
                         path="/appdemo"
                         element={
                             <>
