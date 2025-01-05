@@ -27,7 +27,7 @@ export default function DesktopNavbar() {
    * 
    * @type {{ selected: string, sharedState: object, setSharedState: SetStateAction<object> }}
    */
-  const [ selected, sharedState, setSharedState ] = useContext(AppContext)
+  const { selected, sharedState, setSharedState } = useContext(AppContext)
 
 
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
