@@ -5,6 +5,7 @@ import { Vector3 } from "three"
 import Placeholder from "./Placeholder"
 import { Button } from "@/components/separate_files/ui/button"
 import { Pencil } from "lucide-react"
+import { ThreeEvent } from "@react-three/fiber"
 
 function BadgeButton({ onClick }: { onClick: () => void }) {
     return (
@@ -36,11 +37,14 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
 */
 export default function ModelLoader(props) {
 
-    const { sharedState, selected, setSelected, hovered, hover, setActiveAccordion, menuState, setMenuState } = useContext(AppContext)
+    const { sharedState, selected, setSelected, hovered, hover, setActiveAccordion, menuState, setMenuState, isDragging, setIsDragging } = useContext(AppContext)
     const [boxSize, setBoxSize] = useState(new Vector3(1, 1, 1))
     const [boxCenter, setBoxCenter] = useState(new Vector3(0, 0, 0))
     const { nodes, materials } = useGLTF(props.file)
     const [isEditVisible, setIsEditVisible] = useState(false)
+    
+    const handlePointerDown = () => setIsDragging(true)
+    const handlePointerUp = () => setIsDragging(false)
 
     const onEditClick = (name: string) => {
         setMenuState("open")
@@ -48,14 +52,16 @@ export default function ModelLoader(props) {
         setActiveAccordion(name)
     }
 
+    const handaleModelClick = (e: ThreeEvent<MouseEvent>) => {
+        // e.stopPropagation();
+        setIsEditVisible(!isEditVisible)
+    }
+
     // convert the node object to an array
     const nodesArray = Object.keys(nodes).map(key => nodes[key])
     const materialsArray = Object.keys(materials).map(key => materials[key])
 
     const geomUpper = nodesArray[props.nodeNum].geometry
-
-    const ptrIn = (e) => hover(e.object.name)
-    const ptrOut = (e) => { if (e.object.name === hovered) hover("") }
 
     /**
      * Computes and sets the size and center of the bounding box for the model.
@@ -99,8 +105,9 @@ export default function ModelLoader(props) {
             name={props.name}
             ref={props.reference}
             position={props.pos}
-            onPointerOver={(e) => ptrIn(e)} onPointerOut={(e) => ptrOut(e)}
-            onClick={(e) => {e.stopPropagation(); setIsEditVisible(!isEditVisible) }}
+            onClick={handaleModelClick}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
             rotation={sharedState[props.name]["rotation"]}
         >
             <Suspense fallback={<Placeholder />}>
@@ -110,17 +117,6 @@ export default function ModelLoader(props) {
                     geometry={geomUpper}
                     material={sharedState[props.name]["color"] === 1 ? materialsArray[0] : materialsArray[1]}
                 />
-                {selected === props.name || hovered === props.name ? (<mesh
-                    scale={boxSize}
-                    position={boxCenter}
-                >
-                    <meshStandardMaterial
-                        color={selected === props.name ? '#B89FF5' : 'white'}
-                        opacity={0.4}
-                        transparent={true}
-                    />
-                    <boxGeometry />
-                </mesh>) : null}
             </Suspense>
             {props.html ? <Html
                 position={[-3, 1, 1.8]}
@@ -134,8 +130,8 @@ export default function ModelLoader(props) {
             {isEditVisible ? <Html
                 position={[length / 2 - 0.3, 1.8, 0]}
             >
-                <BadgeButton onClick={(e) => {
-                    e.stopPropagation(); 
+                <BadgeButton onClick={(e:ThreeEvent<PointerEvent>) => {
+                    e.stopPropagation();
                     onEditClick(props.name);
                 }} />
             </Html> : null}
