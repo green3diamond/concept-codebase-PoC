@@ -76,7 +76,6 @@ export function FloatingMenu({
   onRemove, 
   onSizeChange, 
   menuState, 
-  onToggleMenu, 
   activeAccordion, 
   setActiveAccordion 
 }: FloatingMenuProps) {
@@ -101,15 +100,7 @@ export function FloatingMenu({
   }
 
   return (
-    <div className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${menuState === "'open'" ? "'translate-x-0'" : "'translate-x-full'"}`}>
-      <Button
-        variant="outline"
-        size="icon"
-        className="absolute -left-12 top-0"
-        onClick={onToggleMenu}
-      >
-        {menuState === "'open'" ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-      </Button>
+    <div className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${menuState === "open" ? "translate-x-0" : "translate-x-full"}`}>
       <Card className="w-[90vw] max-w-[320px] shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
           <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">

@@ -80,7 +80,6 @@ function AdaptiveNavbar() {
                 onRemove={handleRemove}
                 onSizeChange={handleSizeChange}
                 menuState={menuState}
-                onToggleMenu={toggleMenu}
                 activeAccordion={activeAccordion}
                 setActiveAccordion={setActiveAccordion}
             />
