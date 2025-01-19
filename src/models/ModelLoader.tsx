@@ -37,9 +37,7 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
 */
 export default function ModelLoader(props) {
 
-    const { sharedState, selected, setSelected, hovered, hover, setActiveAccordion, menuState, setMenuState, isDragging, setIsDragging } = useContext(AppContext)
-    const [boxSize, setBoxSize] = useState(new Vector3(1, 1, 1))
-    const [boxCenter, setBoxCenter] = useState(new Vector3(0, 0, 0))
+    const { sharedState, setSelected, setActiveAccordion, menuState, setMenuState, setIsDragging } = useContext(AppContext)
     const { nodes, materials } = useGLTF(props.file)
     const [isEditVisible, setIsEditVisible] = useState(false)
     const [clickTime, setClickTime] = useState<number | null>(null);
@@ -81,7 +79,7 @@ export default function ModelLoader(props) {
      * @param {Vector3} boxSize - The state variable to store the size of the bounding box.
      * @param {Vector3} boxCenter - The state variable to store the center of the bounding box.
      */
-    function computeAndSetBoundingBox(geomUpper, setBoxSize, setBoxCenter) {
+    function computeAndSetBoundingBox(geomUpper) {
         if (!geomUpper.boundingSphere) {
             geomUpper.computeBoundingSphere()
         }
@@ -91,11 +89,6 @@ export default function ModelLoader(props) {
         }
 
         const scale = props.size / geomUpper.boundingSphere.radius
-        const bbCenter = geomUpper.boundingBox.max.clone().add(geomUpper.boundingBox.min).divideScalar(2)
-        const bbSize = geomUpper.boundingBox.max.clone().sub(geomUpper.boundingBox.min).multiplyScalar(scale)
-
-        setBoxSize(bbSize.multiplyScalar(1.01))
-        setBoxCenter(bbCenter.multiplyScalar(1))
 
         geomUpper.scale(scale, scale, scale)
     }
@@ -108,7 +101,7 @@ export default function ModelLoader(props) {
     }, [[], sharedState])
 
     useEffect(() => {
-        computeAndSetBoundingBox(geomUpper, setBoxSize, setBoxCenter)
+        computeAndSetBoundingBox(geomUpper)
     }, [[], sharedState])
 
 
