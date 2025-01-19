@@ -1,7 +1,6 @@
 import { useGLTF, Html } from "@react-three/drei"
 import { useEffect, useContext, useState, Suspense } from "react"
 import { AppContext } from "../context/AppContext"
-import { Vector3 } from "three"
 import Placeholder from "./Placeholder"
 import { Button } from "@/components/separate_files/ui/button"
 import { Pencil } from "lucide-react"
