@@ -1,12 +1,55 @@
 import { createContext, useState } from 'react';
 import { Params } from 'react-router-dom';
 
+
+interface AppContextType {
+    sharedState: any,
+    setSharedState: (state: any) => void,
+    isDragging: boolean,
+    setIsDragging: (isDragging: boolean) => void,
+    menuState: string,
+    setMenuState: (state: string) => void,
+    activeAccordion: string,
+    setActiveAccordion: (accordion: string) => void,
+    isFurnitureBrowserOpen: boolean,
+    setIsFurnitureBrowserOpen: (isOpen: boolean) => void,
+    isInspireDialogOpen: boolean,
+    setIsInspireDialogOpen: (isOpen: boolean) => void,
+    isRoomSettingsOpen: boolean,
+    setIsRoomSettingsOpen: (isOpen: boolean) => void,
+    selected: string,
+    setSelected: (selected: string) => void,
+    hovered: string,
+    hover: (hovered: string) => void
+}
+
 /**
  * The AppContext object.
  * 
- * @type {React.Context<any>}
+ * @type {AppContextType}
  */
-export const AppContext = createContext({});
+export const AppContext = createContext<AppContextType>({
+    sharedState: {},
+    setSharedState: () => {},
+    isDragging: false,
+    setIsDragging: () => {},
+    menuState: "closed",
+    setMenuState: () => {},
+    activeAccordion: "",
+    setActiveAccordion: () => {},
+    isFurnitureBrowserOpen: false,
+    setIsFurnitureBrowserOpen: () => {},
+    isInspireDialogOpen: false,
+    setIsInspireDialogOpen: () => {},
+    isRoomSettingsOpen: false,
+    setIsRoomSettingsOpen: () => {},
+    selected: "",
+    setSelected: () => {},
+    hovered: "",
+    hover: () =>{}
+});
+
+
 
 /**
  * The AppProvider component.
@@ -68,8 +111,8 @@ export const AppProvider = ({ children }: Params): JSX.Element => {
     })
 
     // Only UI-related states
-    const [isDragging, setIsDragging] = useState(false)
     const [menuState, setMenuState] = useState("closed")
+    const [isDragging, setIsDragging] = useState(false)
     const [activeAccordion, setActiveAccordion] = useState("")
     const [isFurnitureBrowserOpen, setIsFurnitureBrowserOpen] = useState(false)
     const [isInspireDialogOpen, setIsInspireDialogOpen] = useState(false)

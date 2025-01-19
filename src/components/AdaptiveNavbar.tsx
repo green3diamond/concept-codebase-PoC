@@ -20,19 +20,17 @@ function AdaptiveNavbar() {
         isInspireDialogOpen,
         setIsInspireDialogOpen,
         isRoomSettingsOpen,
-        setIsRoomSettingsOpen,
-        selected,
-        setSelected
+        setIsRoomSettingsOpen
     } = useContext(AppContext)
 
-    const selectedCouch = selected ? sharedState[selected] : sharedState.modSofa
+    const selectedCouch = activeAccordion ? sharedState[activeAccordion] : sharedState.modSofa
 
     const handleRotate = () => {
         setSharedState(prev => ({
             ...prev,
-            [selected]: {
-                ...prev[selected],
-                rotation: [0, prev[selected].rotation[1] + Math.PI / 2, 0]
+            [activeAccordion]: {
+                ...prev[activeAccordion],
+                rotation: [0, prev[activeAccordion].rotation[1] + Math.PI / 2, 0]
             }
         }))
     }
@@ -40,8 +38,8 @@ function AdaptiveNavbar() {
     const handleColorChange = (newColor: string) => {
         setSharedState(prev => ({
             ...prev,
-            [selected]: {
-                ...prev[selected],
+            [activeAccordion]: {
+                ...prev[activeAccordion],
                 color: newColor
             }
         }))
@@ -50,8 +48,8 @@ function AdaptiveNavbar() {
     const handleRemove = () => {
         setSharedState(prev => ({
             ...prev,
-            [selected]: {
-                ...prev[selected],
+            [activeAccordion]: {
+                ...prev[activeAccordion],
                 isVisible: false
             }
         }))
@@ -60,8 +58,8 @@ function AdaptiveNavbar() {
     const handleSizeChange = (newSize: string) => {
         setSharedState(prev => ({
             ...prev,
-            [selected]: {
-                ...prev[selected],
+            [activeAccordion]: {
+                ...prev[activeAccordion],
                 size: newSize
             }
         }))
@@ -95,8 +93,8 @@ function AdaptiveNavbar() {
                 setIsCouchEditVisible={(isVisible) => {
                     setSharedState(prev => ({
                         ...prev,
-                        [selected]: {
-                            ...prev[selected],
+                        [activeAccordion]: {
+                            ...prev[activeAccordion],
                             isEditVisible: isVisible
                         }
                     }))
