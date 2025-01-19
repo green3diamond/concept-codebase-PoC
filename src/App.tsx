@@ -9,27 +9,13 @@ import { Canvas } from '@react-three/fiber'
 import { Analytics } from "@vercel/analytics/react"
 import AdaptiveNavbar from "./components/AdaptiveNavbar.tsx"
 import withIsMobileViewProvider from "./context/withIsMobileVIewProvider.tsx";
-import { useContext } from "react"
-import { AppContext } from "./context/AppContext"
 
 /**
  * The main application component.
  * @returns {JSX.Element} - The JSX element representing the application.
  */
-function App() {
+function App() {    
     
-    const { setActiveAccordion, menuState, setMenuState, isDragging } = useContext(AppContext)
-    
-    
-    const handleCanvasClick = () => {
-        console.log(isDragging)
-        if (isDragging) return
-        if (menuState === "open") {
-          setMenuState("closed")
-        }
-        setActiveAccordion("")
-      }
-
     return (
         <>
             {/* This is the alias of BrowserRouter i.e. Router */}
