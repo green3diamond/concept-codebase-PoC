@@ -42,19 +42,31 @@ export default function ModelLoader(props) {
     const [boxCenter, setBoxCenter] = useState(new Vector3(0, 0, 0))
     const { nodes, materials } = useGLTF(props.file)
     const [isEditVisible, setIsEditVisible] = useState(false)
-    
-    const handlePointerDown = () => setIsDragging(true)
-    const handlePointerUp = () => setIsDragging(false)
+    const [clickTime, setClickTime] = useState<number | null>(null);
+
+    const handlePointerDown = () => {
+        setIsDragging(true);
+        setClickTime(Date.now());
+    };
+
+    const handlePointerUp = () => {
+        setIsDragging(false);
+        if (clickTime && Date.now() - clickTime <= 200) {
+            setIsEditVisible(!isEditVisible);
+        }
+        setClickTime(null);
+    };
 
     const onEditClick = (name: string) => {
+        if (menuState === "closed") {
         setMenuState("open")
         setSelected(name)
         setActiveAccordion(name)
-    }
-
-    const handaleModelClick = (e: ThreeEvent<MouseEvent>) => {
-        // e.stopPropagation();
-        setIsEditVisible(!isEditVisible)
+        }
+        else {
+            setMenuState("closed")
+            setActiveAccordion("")
+        }
     }
 
     // convert the node object to an array
@@ -105,7 +117,6 @@ export default function ModelLoader(props) {
             name={props.name}
             ref={props.reference}
             position={props.pos}
-            onClick={handaleModelClick}
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
             rotation={sharedState[props.name]["rotation"]}

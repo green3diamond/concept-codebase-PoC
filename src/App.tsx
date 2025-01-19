@@ -18,10 +18,12 @@ import { AppContext } from "./context/AppContext"
  */
 function App() {
     
-    const { setActiveAccordion, menuState, setMenuState } = useContext(AppContext)
+    const { setActiveAccordion, menuState, setMenuState, isDragging } = useContext(AppContext)
     
     
     const handleCanvasClick = () => {
+        console.log(isDragging)
+        if (isDragging) return
         if (menuState === "open") {
           setMenuState("closed")
         }
@@ -53,7 +55,7 @@ function App() {
                                         position: [-8, 8, 15]
 
                                     }}
-                                    onClick={handleCanvasClick}
+                                    // onClick={handleCanvasClick}
                                 >
                                     <Experience />
                                 </Canvas>
