@@ -8,46 +8,45 @@ import { Pencil } from "lucide-react"
 
 function BadgeButton({ onClick }: { onClick: () => void }) {
     return (
-      <Button
-        variant="secondary"
-        size="icon"
-        className="w-8 h-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-200"
-        onClick={onClick}
-      >
-        <Pencil className="h-4 w-4 text-gray-600" />
-        <span className="sr-only">Edit</span>
-      </Button>
+        <Button
+            variant="secondary"
+            size="icon"
+            className="w-8 h-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-200"
+            onClick={onClick}
+        >
+            <Pencil className="h-4 w-4 text-gray-600" />
+            <span className="sr-only">Edit</span>
+        </Button>
     )
-  }
+}
 
-  
-  /**
-   * A React component to load and display 3D models.
-   * @param {Object} props - The properties of the component.
-   * @param {string} props.file - The path to the 3D model file.
-   * @param {number} props.nodeNum - The index of the node in the model to be displayed.
-   * @param {string} props.name - The name of the model.
-   * @param {Object} props.reference - A reference to the model mesh.
-   * @param {Object} props.pos - The position of the model.
-   * @param {number} props.size - The size of the model.
-   * @param {boolean} props.html - Whether to display HTML component with a message over the model.
-   * @param {boolean} props.occlude - Whether to occlude the HTML content.
-   * @returns {JSX.Element} - The JSX element for the ModelLoader component.
-  */
- export default function ModelLoader(props) {
-     
-    const { sharedState, selected, setSelected, hovered, hover, setActiveAccordion, setMenuState } = useContext(AppContext)
+
+/**
+ * A React component to load and display 3D models.
+ * @param {Object} props - The properties of the component.
+ * @param {string} props.file - The path to the 3D model file.
+ * @param {number} props.nodeNum - The index of the node in the model to be displayed.
+ * @param {string} props.name - The name of the model.
+ * @param {Object} props.reference - A reference to the model mesh.
+ * @param {Object} props.pos - The position of the model.
+ * @param {number} props.size - The size of the model.
+ * @param {boolean} props.html - Whether to display HTML component with a message over the model.
+ * @param {boolean} props.occlude - Whether to occlude the HTML content.
+ * @returns {JSX.Element} - The JSX element for the ModelLoader component.
+*/
+export default function ModelLoader(props) {
+
+    const { sharedState, selected, setSelected, hovered, hover, setActiveAccordion, menuState, setMenuState } = useContext(AppContext)
     const [boxSize, setBoxSize] = useState(new Vector3(1, 1, 1))
     const [boxCenter, setBoxCenter] = useState(new Vector3(0, 0, 0))
     const { nodes, materials } = useGLTF(props.file)
     const [isEditVisible, setIsEditVisible] = useState(false)
-     
-    const onEditClick = (name:string) => {
+
+    const onEditClick = (name: string) => {
         setMenuState("open")
         setSelected(name)
         setActiveAccordion(name)
-        setMenuState("open")
-     }
+    }
 
     // convert the node object to an array
     const nodesArray = Object.keys(nodes).map(key => nodes[key])
@@ -57,21 +56,6 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
 
     const ptrIn = (e) => hover(e.object.name)
     const ptrOut = (e) => { if (e.object.name === hovered) hover("") }
-
-    // const dblClick = (e) => {
-    //     // e.stopPropagation()
-    //     console.log("dblClick")
-        
-    //     if (e.object.name === selected) {
-    //         setSelected("")
-    //         setActiveAccordion("")
-    //         setMenuState("closed")
-    //     } else {
-    //         setSelected(e.object.name)
-    //         setActiveAccordion(e.object.name)
-    //         setMenuState("open")
-    //     }
-    // }
 
     /**
      * Computes and sets the size and center of the bounding box for the model.
@@ -107,8 +91,8 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
 
     useEffect(() => {
         computeAndSetBoundingBox(geomUpper, setBoxSize, setBoxCenter)
-    }, [[],sharedState])
-    
+    }, [[], sharedState])
+
 
     const finalObject =
         (<mesh
@@ -116,8 +100,7 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
             ref={props.reference}
             position={props.pos}
             onPointerOver={(e) => ptrIn(e)} onPointerOut={(e) => ptrOut(e)}
-            // onDoubleClick={(e) => dblClick(e)}
-            onClick={() => {setIsEditVisible(!isEditVisible)}}
+            onClick={(e) => {e.stopPropagation(); setIsEditVisible(!isEditVisible) }}
             rotation={sharedState[props.name]["rotation"]}
         >
             <Suspense fallback={<Placeholder />}>
@@ -148,13 +131,14 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
             >
                 Move me!
             </Html> : null}
-            {isEditVisible ?  <Html
-                position={[length/2 - 0.3, 1.8, 0]}
+            {isEditVisible ? <Html
+                position={[length / 2 - 0.3, 1.8, 0]}
             >
-                <BadgeButton onClick={() => { 
-                    // e.stopPropagation(); 
-                    onEditClick(props.name); }} />
-            </Html> : null }
+                <BadgeButton onClick={(e) => {
+                    e.stopPropagation(); 
+                    onEditClick(props.name);
+                }} />
+            </Html> : null}
         </mesh>)
 
     return finalObject

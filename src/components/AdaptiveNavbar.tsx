@@ -6,6 +6,7 @@ import { FloatingNavigation } from "./separate_files/FloatingNavigation"
 import { FurnitureBrowser } from "./separate_files/FurnitureBrowser"
 import { InspireDialog } from "./separate_files/InspireDialog"
 import { RoomSettingsDialog } from "./separate_files/RoomSettingsDialog"
+import { prepare } from "@react-three/fiber/dist/declarations/src/core/renderer"
 
 function AdaptiveNavbar() {
     const {
@@ -22,9 +23,9 @@ function AdaptiveNavbar() {
         isRoomSettingsOpen,
         setIsRoomSettingsOpen
     } = useContext(AppContext)
-
+    
     const selectedCouch = activeAccordion ? sharedState[activeAccordion] : sharedState.modSofa
-
+    
     const handleRotate = () => {
         setSharedState(prev => ({
             ...prev,
@@ -66,14 +67,15 @@ function AdaptiveNavbar() {
     }
 
     const toggleMenu = () => {
+        console.log(menuState)
         setMenuState(prevState => prevState === "open" ? "closed" : "open")
     }
 
     return (
         <>
             <FloatingMenu 
-                couchName={selectedCouch.name}
-                couchColor={selectedCouch.color}
+                couchName={selectedCouch['name']}
+                couchColor={selectedCouch['name']}
                 onRotate={handleRotate} 
                 onColorChange={handleColorChange} 
                 onRemove={handleRemove}
