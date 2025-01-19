@@ -118,7 +118,7 @@ export function FloatingMenu({
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible value={activeAccordion} onValueChange={setActiveAccordion}>
-            <AccordionItem value="comfy-couch">
+            <AccordionItem value={activeAccordion}>
               <AccordionTrigger>{couchName}</AccordionTrigger>
               <AccordionContent className="space-y-4 pt-2">
                 <div className="space-y-4">

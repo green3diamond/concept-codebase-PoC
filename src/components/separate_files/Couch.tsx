@@ -132,8 +132,8 @@ export function Couch({ color, rotation, size, position, onDrag, onDragStart, on
   }[size]
 
   return (
-    <group 
-      ref={group} 
+    <group
+      ref={group}
       position={position}
       onClick={(e) => e.stopPropagation()}
       onPointerMissed={hideButton}
@@ -156,16 +156,16 @@ export function Couch({ color, rotation, size, position, onDrag, onDragStart, on
         <boxGeometry args={[length, 1.2, 0.3]} />
         <meshStandardMaterial color={color} />
       </mesh>
-      <mesh position={[-length/2 + 0.15, 0.675, 0]} castShadow>
+      <mesh position={[-length / 2 + 0.15, 0.675, 0]} castShadow>
         <boxGeometry args={[0.3, 0.6, 1.5]} />
         <meshStandardMaterial color={color} />
       </mesh>
-      <mesh position={[length/2 - 0.15, 0.675, 0]} castShadow>
+      <mesh position={[length / 2 - 0.15, 0.675, 0]} castShadow>
         <boxGeometry args={[0.3, 0.6, 1.5]} />
         <meshStandardMaterial color={color} />
       </mesh>
       <Html
-        position={[length/2 - 0.3, 1.8, 0]}
+        position={[length / 2 - 0.3, 1.8, 0]}
         style={{
           transition: "'all 0.2s'",
           transform: `scale(${isEditVisible ? 1 : 0.5})`,
