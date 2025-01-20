@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { AppContext } from "../context/AppContext"
-import withIsMobileView from "../context/withIsMobileView.tsx"
 import { FloatingMenu } from "./FloatingMenu"
 import { FloatingNavigation } from "./FloatingNavigation"
 import { FurnitureBrowser } from "./FurnitureBrowser"
@@ -107,4 +106,4 @@ function AdaptiveNavbar() {
     )
 }
 
-export default withIsMobileView(AdaptiveNavbar)
+export default AdaptiveNavbar

@@ -8,7 +8,6 @@ import Experience from './Experience.tsx'
 import { Canvas } from '@react-three/fiber'
 import { Analytics } from "@vercel/analytics/react"
 import AdaptiveNavbar from "./components/AdaptiveNavbar.tsx"
-import withIsMobileViewProvider from "./context/withIsMobileVIewProvider.tsx";
 
 /**
  * The main application component.
@@ -56,4 +55,4 @@ function App() {
     )
 }
 
-export default withIsMobileViewProvider(App)
+export default App
