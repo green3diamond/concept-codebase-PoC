@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { ChevronLeft, ChevronRight, RotateCw, Trash2 } from "lucide-react"
-import { Button } from "@/components/separate_files/ui/button"
-import { RadioGroup, RadioGroupItem } from "@/components/separate_files/ui/radio-group"
-import { Label } from "@/components/separate_files/ui/label"
+import { Button } from "@/components/ui/button"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/separate_files/ui/card"
+} from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -16,13 +16,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/separate_files/ui/dialog"
+} from "@/components/ui/dialog"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/separate_files/ui/accordion"
+} from "@/components/ui/accordion"
 
 interface FloatingMenuProps {
   couchName: string

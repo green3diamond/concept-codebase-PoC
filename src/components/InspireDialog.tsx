@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { Button } from "@/components/separate_files/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/separate_files/ui/dialog"
+} from "@/components/ui/dialog"
 
 interface InspireDialogProps {
   isOpen: boolean

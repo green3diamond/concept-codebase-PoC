@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useState, useEffect } from "react"
 import { useThree, useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
-import { Button } from "@/components/separate_files/ui/button"
+import { Button } from "@/components/ui/button"
 import { Pencil } from "lucide-react"
 
 interface CouchProps {

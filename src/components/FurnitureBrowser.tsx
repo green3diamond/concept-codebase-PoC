@@ -1,21 +1,21 @@
 import React, { useState } from "react"
 import { Sofa, Armchair, Bed, Utensils, Lamp, Plus } from "lucide-react"
-import { Button } from "@/components/separate_files/ui/button"
-import { ScrollArea } from "@/components/separate_files/ui/scroll-area"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/separate_files/ui/tooltip"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import {
   Dialog,
   DialogContent,
   DialogTitle,
-} from "@/components/separate_files/ui/dialog"
+} from "@/components/ui/dialog"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/separate_files/ui/card"
-import { Avatar, AvatarFallback } from "@/components/separate_files/ui/avatar"
+} from "@/components/ui/card"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 interface FurnitureBrowserProps {
   isOpen: boolean

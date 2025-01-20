@@ -1,10 +1,10 @@
 import React from "react"
 import { Sofa, Sparkles, Home } from "lucide-react"
-import { Button } from "@/components/separate_files/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-} from "@/components/separate_files/ui/card"
+} from "@/components/ui/card"
 
 interface FloatingNavigationProps {
   isFurnitureBrowserOpen: boolean

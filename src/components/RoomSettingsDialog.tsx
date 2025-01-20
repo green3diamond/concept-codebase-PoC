@@ -1,7 +1,7 @@
 import React from "'react'"
-import { Button } from "@/components/separate_files/ui/button"
-import { Input } from "@/components/separate_files/ui/input"
-import { Label } from "@/components/separate_files/ui/label"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/separate_files/ui/dialog"
+} from "@/components/ui/dialog"
 
 interface RoomSettingsDialogProps {
   isOpen: boolean

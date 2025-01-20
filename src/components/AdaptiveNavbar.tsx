@@ -1,11 +1,11 @@
 import { useContext } from "react"
 import { AppContext } from "../context/AppContext"
 import withIsMobileView from "../context/withIsMobileView.tsx"
-import { FloatingMenu } from "./separate_files/FloatingMenu"
-import { FloatingNavigation } from "./separate_files/FloatingNavigation"
-import { FurnitureBrowser } from "./separate_files/FurnitureBrowser"
-import { InspireDialog } from "./separate_files/InspireDialog"
-import { RoomSettingsDialog } from "./separate_files/RoomSettingsDialog"
+import { FloatingMenu } from "./FloatingMenu"
+import { FloatingNavigation } from "./FloatingNavigation"
+import { FurnitureBrowser } from "./FurnitureBrowser"
+import { InspireDialog } from "./InspireDialog"
+import { RoomSettingsDialog } from "./RoomSettingsDialog"
 
 function AdaptiveNavbar() {
     const {
