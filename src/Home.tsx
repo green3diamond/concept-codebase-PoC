@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import smallLogo from '/smallLogo.jpeg'
+import smallLogo from '../public/smallLogo.jpeg'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {

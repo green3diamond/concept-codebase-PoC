@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "deploy": "vercel --prod"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "devDependencies": {
     "@types/node": "^22.7.4",
