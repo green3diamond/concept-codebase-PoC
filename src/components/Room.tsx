@@ -1,4 +1,5 @@
-import React from "react"
+import React from 'react'
+import { Mesh } from 'three'
 
 export function Room() {
   return (

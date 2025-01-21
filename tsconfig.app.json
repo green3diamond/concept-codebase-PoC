@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": [
@@ -20,7 +22,6 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
     "jsx": "react-jsx",
     /* Linting */
     "strict": true,

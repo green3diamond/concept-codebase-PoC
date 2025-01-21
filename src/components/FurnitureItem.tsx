@@ -4,14 +4,10 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { Button } from "@/components/ui/button"
 import { Pencil } from 'lucide-react'
-import { sizeToLength } from '../utils/furnitureOptions';
+import { sizeToLength } from '../utils/furnitureOptions'
+import { FurnitureItem as FurnitureItemType } from '../types/furniture'
 
-interface CouchProps {
-  color: string
-  rotation: number
-  size: string
-  position: [number, number, number]
-  type: string
+interface FurnitureItemProps extends FurnitureItemType {
   onDrag: (newPosition: [number, number, number]) => void
   onDragStart: () => void
   onDragEnd: () => void
@@ -35,55 +31,29 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
   )
 }
 
-/**
- * Couch Component - A 3D couch model with interactive features
- * 
- * Features:
- * - Draggable in 3D space
- * - Customizable color and size
- * - Rotatable
- * - Edit button that appears on selection
- * - Shadow casting and receiving
- * 
- * Props:
- * @param {string} color - The color of the couch
- * @param {number} rotation - Rotation angle in radians
- * @param {string} size - Size of the couch ('small'|'medium'|'large'|'xl')
- * @param {[number, number, number]} position - 3D position coordinates [x,y,z]
- * @param {function} onDrag - Callback when couch is dragged
- * @param {function} onDragStart - Callback when drag starts
- * @param {function} onDragEnd - Callback when drag ends
- * @param {function} onModelClick - Callback when couch is clicked
- * @param {function} onEditClick - Callback when edit button is clicked
- * @param {boolean} isEditVisible - Controls edit button visibility
- * @param {function} setIsEditVisible - Sets edit button visibility
- * 
- * Sub-components:
- * - BadgeButton: A floating edit button that appears above the couch
- * 
- * Implementation:
- * - Uses Three.js for 3D rendering
- * - Uses React Three Fiber for React integration
- * - Implements drag and drop using raycasting
- * - Smooth rotation transitions using lerp
- */
-export function Couch({ color, rotation, size, position, onDrag, onDragStart, onDragEnd, onModelClick, onEditClick, isEditVisible, setIsEditVisible }: CouchProps) {
+export function FurnitureItem({ 
+  id, 
+  color, 
+  rotation, 
+  size, 
+  position, 
+  type, 
+  onDrag, 
+  onDragStart, 
+  onDragEnd, 
+  onModelClick, 
+  onEditClick, 
+  isEditVisible, 
+  setIsEditVisible 
+}: FurnitureItemProps) {
   const group = useRef<THREE.Group>(null)
   const { camera, raycaster, gl } = useThree()
   const [isDragging, setIsDragging] = useState(false)
-  const [isButtonVisible, setIsButtonVisible] = useState(false)
   const [isPointerDown, setIsPointerDown] = useState(false)
   const dragStart = useRef(new THREE.Vector3())
   const dragOffset = useRef(new THREE.Vector3())
   const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
   const intersectionPoint = new THREE.Vector3()
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsButtonVisible(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useFrame(() => {
     if (group.current) {
@@ -152,12 +122,10 @@ export function Couch({ color, rotation, size, position, onDrag, onDragStart, on
       case 'table':
         return (
           <group>
-            {/* Table top */}
             <mesh position={[0, 0.75, 0]} castShadow receiveShadow>
               <boxGeometry args={[1.2, 0.05, 0.8]} />
               <meshStandardMaterial color={color} />
             </mesh>
-            {/* Table legs */}
             <mesh position={[-0.55, 0.35, -0.35]} castShadow>
               <cylinderGeometry args={[0.05, 0.05, 0.7]} />
               <meshStandardMaterial color={color} />
