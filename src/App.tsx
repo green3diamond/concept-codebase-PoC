@@ -45,7 +45,7 @@ export default function App() {
                                     <Experience />
                                 </Canvas>
                                 {/* Custom buttons component */}
-                                <AdaptiveNavbar />
+                                {/* <AdaptiveNavbar /> */}
                             </>
                         }
                     />

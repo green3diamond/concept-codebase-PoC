@@ -7,6 +7,7 @@ import { Pencil } from 'lucide-react'
 import { sizeToLength } from '../utils/furnitureOptions';
 
 interface CouchProps {
+  id: string
   color: string
   rotation: number
   size: string
@@ -67,7 +68,7 @@ function BadgeButton({ onClick }: { onClick: () => void }) {
  * - Implements drag and drop using raycasting
  * - Smooth rotation transitions using lerp
  */
-export function Couch({ color, rotation, size, position, onDrag, onDragStart, onDragEnd, onModelClick, onEditClick, isEditVisible, setIsEditVisible }: CouchProps) {
+export function FurnitureItem({ id, color, rotation, size, position, type, onDrag, onDragStart, onDragEnd, onModelClick, onEditClick, isEditVisible, setIsEditVisible }: CouchProps) {
   const group = useRef<THREE.Group>(null)
   const { camera, raycaster, gl } = useThree()
   const [isDragging, setIsDragging] = useState(false)
