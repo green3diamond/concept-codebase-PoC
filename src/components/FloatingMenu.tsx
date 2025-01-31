@@ -96,29 +96,32 @@ export function FloatingMenu({
 
   return (
     <div className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${menuState === 'open' ? 'translate-x-0' : 'translate-x-full'}`}>
-      <Card className="w-[90vw] max-w-[320px] shadow-lg">
+      <Card className={`w-[90vw] max-w-[320px] shadow-lg relative ${menuState === "open" ? "z-50" : ""}`}>
+        <Button
+          variant="outline"
+          size="icon"
+          className={`absolute -left-12 top-0 transition-all duration-300 ${
+            menuState === "open" ? "-translate-x-1 z-40" : "z-50"
+          }`}
+          onClick={onToggleMenu}
+        >
+          <ChevronLeft className={`h-4 w-4 transition-transform ${menuState === "open" ? "rotate-180" : ""}`} />
+        </Button>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-primary">
-            Room Designer
-          </CardTitle>
+          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">Room Designer</CardTitle>
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible value={activeAccordion} onValueChange={setActiveAccordion}>
             {furniture.map((item) => (
               <AccordionItem key={item.id} value={item.id}>
-                <AccordionTrigger asChild>
-                  <div className="flex justify-between items-center w-full py-4 cursor-pointer">
-                    <span>{item.name} ({item.type})</span>
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveAccordion(activeAccordion === item.id ? '' : item.id);
-                      }}
-                      className="w-8 h-8 p-0 flex items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-200"
-                    >
-                      <Pencil className="h-4 w-4 text-gray-600" />
-                      <span className="sr-only">Edit {item.name}</span>
-                    </div>
+                <AccordionTrigger className="py-4">
+                  <div className="flex justify-between items-center w-full">
+                    <span>
+                      {item.name} #
+                      {furniture.filter((f) => f.type === item.type).findIndex((f) => f.id === item.id) + 1} (
+                      {item.type})
+                    </span>
+                    <Pencil className="h-4 w-4 text-gray-600" />
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="space-y-4 pt-2">
@@ -131,7 +134,7 @@ export function FloatingMenu({
                             <button
                               className={`w-8 h-8 rounded-full ${option.color} border-2 transition-colors mb-1`}
                               style={{
-                                borderColor: item.color === option.value ? 'black' : 'transparent',
+                                borderColor: item.color === option.value ? "black" : "transparent",
                               }}
                               onClick={() => onColorChange(item.id, option.value)}
                               aria-label={`Select ${option.name} color`}
@@ -143,7 +146,11 @@ export function FloatingMenu({
                     </div>
                     <div>
                       <h4 className="text-sm font-medium mb-2">Size</h4>
-                      <RadioGroup onValueChange={(value) => onSizeChange(item.id, value)} value={item.size} className="space-y-2">
+                      <RadioGroup
+                        onValueChange={(value) => onSizeChange(item.id, value)}
+                        value={item.size}
+                        className="space-y-2"
+                      >
                         {sizeOptions.map((option, optionIndex) => (
                           <div key={optionIndex} className="flex items-center space-x-2">
                             <RadioGroupItem value={option.value} id={`${item.id}-${option.value}`} />
@@ -154,19 +161,11 @@ export function FloatingMenu({
                         ))}
                       </RadioGroup>
                     </div>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => onRotate(item.id)}
-                    >
+                    <Button variant="outline" className="w-full justify-start" onClick={() => onRotate(item.id)}>
                       <RotateCw className="mr-2 h-4 w-4" />
                       Rotate
                     </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => onDuplicate(item.id)}
-                    >
+                    <Button variant="outline" className="w-full justify-start" onClick={() => onDuplicate(item.id)}>
                       <Copy className="mr-2 h-4 w-4" />
                       Duplicate
                     </Button>
@@ -189,7 +188,7 @@ export function FloatingMenu({
         </CardContent>
       </Card>
 
-      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen}>
+      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen} className="z-[100]">
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Remove Furniture</DialogTitle>

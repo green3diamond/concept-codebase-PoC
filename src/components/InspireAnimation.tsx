@@ -1,6 +1,6 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Sofa, Lamp, Table, RockingChairIcon as ChairRecline, Sparkles, X } from 'lucide-react'
+import React from "react"
+import { motion } from "framer-motion"
+import { Sofa, Lamp, Table, RockingChairIcon as ChairRecline, Sparkles, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface InspireAnimationProps {
@@ -21,7 +21,10 @@ export function InspireAnimation({ onStart, onClose }: InspireAnimationProps) {
           variant="ghost"
           size="icon"
           className="absolute top-2 right-2"
-          onClick={onClose}
+          onClick={() => {
+            onClose()
+            onStart()
+          }}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -50,7 +53,7 @@ export function InspireAnimation({ onStart, onClose }: InspireAnimationProps) {
           <motion.div
             animate={{
               rotate: [0, 10, -10, 10, 0],
-              transition: { repeat: Infinity, duration: 2 }
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 2 },
             }}
           >
             <Sofa size={48} />
@@ -58,7 +61,7 @@ export function InspireAnimation({ onStart, onClose }: InspireAnimationProps) {
           <motion.div
             animate={{
               y: [0, -10, 0],
-              transition: { repeat: Infinity, duration: 1.5, delay: 0.2 }
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 1.5, delay: 0.2 },
             }}
           >
             <Lamp size={48} />
@@ -66,7 +69,7 @@ export function InspireAnimation({ onStart, onClose }: InspireAnimationProps) {
           <motion.div
             animate={{
               rotate: [0, -10, 10, -10, 0],
-              transition: { repeat: Infinity, duration: 2, delay: 0.4 }
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 2, delay: 0.4 },
             }}
           >
             <Table size={48} />
@@ -74,20 +77,16 @@ export function InspireAnimation({ onStart, onClose }: InspireAnimationProps) {
           <motion.div
             animate={{
               scale: [1, 1.1, 1],
-              transition: { repeat: Infinity, duration: 1.5, delay: 0.6 }
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 1.5, delay: 0.6 },
             }}
           >
             <ChairRecline size={48} />
           </motion.div>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.5 }}>
           <Button
             onClick={onStart}
-            className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors duration-200"
+            className="px-6 py-2 bg-zinc-900 text-white rounded-full hover:bg-primary-dark transition-colors duration-200 dark:bg-zinc-50"
           >
             <Sparkles className="mr-2" /> Start the Magic!
           </Button>

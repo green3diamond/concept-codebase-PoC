@@ -79,7 +79,7 @@ export function FurnitureBrowser({ isOpen, onClose, onAddFurniture }: FurnitureB
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-full sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-6xl w-full h-[80vh] flex flex-col sm:flex-row p-0 gap-0">
-        <div className="w-full sm:w-64 bg-secondary p-4 flex flex-col">
+        <div className="w-full sm:w-64 bg-zinc-100 p-4 flex flex-col dark:bg-zinc-800">
           <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold mb-4">Browse Furniture</DialogTitle>
           <ScrollArea className="flex-grow">
             <div className="flex flex-row sm:flex-col">
@@ -100,7 +100,7 @@ export function FurnitureBrowser({ isOpen, onClose, onAddFurniture }: FurnitureB
             </div>
           </ScrollArea>
         </div>
-        <div className="flex-grow p-4 sm:p-6 bg-background overflow-y-auto">
+        <div className="flex-grow p-4 sm:p-6 bg-white overflow-y-auto dark:bg-zinc-950">
           <ScrollArea className="h-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {furnitureItems[selectedCategory]?.map((item) => (
@@ -125,7 +125,7 @@ export function FurnitureBrowser({ isOpen, onClose, onAddFurniture }: FurnitureB
                     <Button 
                       variant="secondary" 
                       size="icon" 
-                      className="shrink-0 bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30"
+                      className="shrink-0 bg-zinc-900/10 hover:bg-zinc-900/20 dark:bg-zinc-900/20 dark:hover:bg-zinc-900/30 dark:bg-zinc-50/10 dark:hover:bg-zinc-50/20 dark:dark:bg-zinc-50/20 dark:dark:hover:bg-zinc-50/30"
                       onClick={() => onAddFurniture({...item, type: selectedCategory})}
                     >
                       <Plus className="h-4 w-4" />
