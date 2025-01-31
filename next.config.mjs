@@ -16,5 +16,5 @@ const nextConfig = {
     //   return config;
     // },
 }
-  export default nextConfigclear
+  export default nextConfig
   

@@ -1,4 +1,4 @@
-import { ColorOption, SizeOption } from "'./types/furniture'";
+import { ColorOption, SizeOption } from "./types/furniture";
 
 export const colorOptions: ColorOption[] = [
   { label: "Sage", color: "bg-[#8A9A5B]", value: "#8A9A5B", name: "Herbal Sage" },
