@@ -3,31 +3,32 @@ import {
     Routes,
     Route,
 } from "react-router-dom"
-import Home from './Home.tsx'
-import Experience from './Experience.tsx'
+import Home from './Home'
+import Experience from './Experience'
 import { Canvas } from '@react-three/fiber'
 import { Analytics } from "@vercel/analytics/react"
-import AdaptiveNavbar from "./components/AdaptiveNavbar.tsx"
+import AdaptiveNavbar from "./components/AdaptiveNavbar"
 
 /**
  * The main application component.
  * @returns {JSX.Element} - The JSX element representing the application.
  */
-function App() {    
+export default function App() {    
     
     return (
         <>
             {/* This is the alias of BrowserRouter i.e. Router */}
             <Analytics />
+            {/* <Home /> */}
             <Router>
                 <Routes>
-                    {/* This route is for home component with exact path "/", in component props we passes the imported component*/}
+                    {/* This route is for home component with exact path "/", in component props we passes the imported component* */}
                     <Route
-                        path="/"
+                        path="/asd"
                         element={<Home />}
                     />
                     <Route
-                        path="/appdemo"
+                        path="/"
                         element={
                             <>
                                 {/* Canvas component for 3D rendering with shadows enabled */}
@@ -40,7 +41,6 @@ function App() {
                                         position: [-8, 8, 15]
 
                                     }}
-                                    // onClick={handleCanvasClick}
                                 >
                                     <Experience />
                                 </Canvas>
@@ -54,5 +54,3 @@ function App() {
         </>
     )
 }
-
-export default App

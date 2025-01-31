@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { Params } from 'react-router-dom';
+import { ReactNode } from 'react'
 
 
 interface AppContextType {
@@ -50,6 +50,10 @@ export const AppContext = createContext<AppContextType>({
 });
 
 
+interface AppProviderProps {
+    children: ReactNode
+  }
+
 
 /**
  * The AppProvider component.
@@ -83,7 +87,7 @@ export const AppContext = createContext<AppContextType>({
  * - selected: string - Currently selected item
  * - hovered: string - Currently hovered item
  */
-export const AppProvider = ({ children }: Params): JSX.Element => {
+export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     /**
      * The shared state object. Contains information about the chosen materials of the different obejcts.
      * 

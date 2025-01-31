@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import Image from 'next/image';
 import smallLogo from '../public/smallLogo.jpeg'
 import { Button } from '@/components/ui/button'
 
@@ -8,7 +9,11 @@ export default function Home() {
             <div id="outsideRoot">
                 <div id="logos">
                     <div className="flex items-center justify-center">
-                        <img src={smallLogo} className="logo flex items-center" alt="Concept logo" />
+                        <Image 
+                            src={smallLogo} 
+                            className="logo flex items-center max-h-full w-auto" 
+                            alt="Concept logo" 
+                        />
                     </div>
                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                         <div className="p-4 bg-slate-50 border-b border-slate-200">

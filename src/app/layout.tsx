@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
     title: 'Concept demo'
@@ -10,15 +11,12 @@ export default function RootLayout({
     children: React.ReactNode
   }) {
     return (
-        <html lang="en">
-            <head>
-                <link rel="icon" type="image/jpeg+xml" href="/concept.svg" />
-            </head>
-            
+        <html lang="en">            
             <body>
-                <div id="root">{children}</div>
-            </body>
-        
+                <div id="root">
+                    {children}
+                  </div>
+            </body>        
         </html>
     )
   }
