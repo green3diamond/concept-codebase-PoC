@@ -1,11 +1,11 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, type Dispatch, type SetStateAction } from 'react';
 import { ReactNode } from 'react'
-import type { FurnitureItem as FurnitureItemType } from "../../types/furniture"
+import type { FurnitureItem } from "../../types/furniture"
 import { v4 as uuidv4 } from "uuid"
 
 interface AppContextType {
-    furniture: FurnitureItemType[],
-    setFurniture: (furniture: FurnitureItemType[]) => void,
+    furniture: FurnitureItem[],
+    setFurniture: Dispatch<SetStateAction<FurnitureItem[]>>,
     sharedState: any,
     setSharedState: (state: any) => void,
     isDragging: boolean,
@@ -139,14 +139,29 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     const [hovered, hover] = useState("")
     const [furniture, setFurniture] = useState<FurnitureItemType[]>([
         {
-          id: uuidv4(),
-          name: "Comfy Couch",
-          rotation: 0,
-          color: "#8A9A5B",
-          size: "small",
-          position: [0, 0, 0],
-          type: "couch",
+            id: uuidv4(),
+            color: "#8A9A5B",
+            rotation:0,
+            size: "medium",
+            position: [-2, 0, 2],
+            name: "Bubbly Couch",
+            isEditVisible: false,
+            nickname: "bubbly",
+            type: "couch",
+            fileName: './bubblyRot2.glb'
         },
+        {
+            id: uuidv4(),
+            color: "#8A9A5B",
+            rotation: 0,
+            size: "medium",
+            position: [0, 0, -3],
+            name: "Modern Sofa",
+            isEditVisible: false,
+            nickname: "modSofa",
+            type: "sofa",
+            fileName: './modernSofa2.glb'
+        }
       ])
     const [roomDimensions, setRoomDimensions] = useState<RoomDimensions>({
     width: 10,

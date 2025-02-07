@@ -6,6 +6,9 @@ export interface FurnitureItem {
   type: string;
   position: [number, number, number];
   rotation: number;
+  isEditVisible?: boolean;
+  nickname?: string;
+  fileName: string;
 }
 
 export interface ColorOption {

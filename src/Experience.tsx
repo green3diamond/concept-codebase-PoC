@@ -1,7 +1,8 @@
-import { Suspense, useRef } from "react"
+import { Suspense, useContext, useMemo, useRef } from "react"
 import { Image, Text, OrbitControls, DragControls } from "@react-three/drei"
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three'
+import * as THREE from 'three'
 
 // Inside your component:
 
@@ -10,6 +11,8 @@ import Walls from "./models/Walls"
 import Carpet from "./models/Carpet"
 import Lights from "./models/Lights"
 import ModelLoader from "./models/ModelLoader"
+import { AppContext } from "./context/AppContext"
+import React from "react"
 
 
 /**
@@ -31,7 +34,9 @@ export default function Experience() {
         modern_z: -3
     }
     const texture = useLoader(TextureLoader, '/logoExp.svg')
-
+    const { furniture, setFurniture } = useContext(AppContext)
+    const groupRef = useRef<THREE.Group>(null)    
+    const meshRefs = useMemo(() => furniture.map(() => React.createRef<THREE.Mesh>()), [furniture])
 
     return <>
         {/* Controls for the camera */}
@@ -47,39 +52,27 @@ export default function Experience() {
         {/* Lights for the 3D scene */}
         <Lights />
 
-        {/* Bubbly chair model */}
-        <DragControls
+        {/* 3D models */}
+        <group ref={groupRef}>
+        {furniture.map((item, index) => (
+            <DragControls
+            key={item.id}
             axisLock="y"
-            dragLimits={[[-props.bubbly_x - 4, -props.bubbly_x + 3], , [-props.bubbly_z - 4, -props.bubbly_z + 3]]}
-        >
+            dragLimits={[
+                [item.position[0] - 4, item.position[0] + 3],
+                undefined,
+                [item.position[2] - 4, item.position[2] + 3]
+            ]}
+            >
             <ModelLoader
-                file={'./bubblyRot2.glb'}
-                html={false}
-                name={'bubbly'}
+                itemId={item.id}
+                file={item.fileName}
                 nodeNum={2}
-                occlude={[bubbly, modSofa]}
-                pos={[props.bubbly_x, -0.25, props.bubbly_z]}
-                reference={bubbly}
-                size={1.4}
+                reference={meshRefs[index]}
             />
-        </DragControls>
-
-        {/* Modern sofa model */}
-        <DragControls
-            axisLock="y"
-            dragLimits={[[-2.5 - props.modern_x, 2.5 - props.modern_x], , [-4 - props.modern_z, 4 - props.modern_z]]}
-
-        >
-            <ModelLoader
-                file={'./modernSofa2.glb'}
-                html={false}
-                name={'modSofa'}
-                nodeNum={2}
-                pos={[props.modern_x, -1, props.modern_z]}
-                reference={modSofa}
-                size={2.5}
-            />
-        </DragControls>
+            </DragControls>
+        ))}
+        </group>
 
         {/* Walls and floor */}
         <Floor />

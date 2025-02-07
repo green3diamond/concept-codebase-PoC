@@ -5,10 +5,12 @@ import { FloatingNavigation } from "./FloatingNavigation"
 import { FurnitureBrowser } from "./FurnitureBrowser"
 import { InspireDialog } from "./InspireDialog"
 import { RoomSettingsDialog } from "./RoomSettingsDialog"
+import type { FurnitureItem as FurnitureItemType } from "../../types/furniture"
 
 function AdaptiveNavbar() {
     const {
         furniture,
+        setFurniture,
         sharedState,
         setSharedState,
         menuState,
@@ -21,54 +23,59 @@ function AdaptiveNavbar() {
         setIsInspireDialogOpen,
         isRoomSettingsOpen,
         setIsRoomSettingsOpen,
-        roomDimensions
+        roomDimensions,
     } = useContext(AppContext)
     
-    const selectedCouch = activeAccordion ? sharedState[activeAccordion] : sharedState.modSofa
     
-    const handleRotate = () => {
-        setSharedState(prev => ({
-            ...prev,
-            [activeAccordion]: {
-                ...prev[activeAccordion],
-                rotation: [0, prev[activeAccordion].rotation[1] + Math.PI / 2, 0]
-            }
-        }))
-    }
-
     const handleDuplicate = () => {
         console.log('dup')
     }
 
     const handleColorChange = (newColor: string) => {
-        setSharedState(prev => ({
-            ...prev,
-            [activeAccordion]: {
-                ...prev[activeAccordion],
-                color: newColor
+        setFurniture((prev: FurnitureItemType[]) =>
+          prev.map((item) => {
+            if (item.id === activeAccordion) {
+              return {
+                ...item,
+                color: newColor,
+              }
             }
-        }))
-    }
-
-    const handleRemove = () => {
-        setSharedState(prev => ({
-            ...prev,
-            [activeAccordion]: {
-                ...prev[activeAccordion],
-                isVisible: false
+            return item
+          }),
+        )
+      }
+    
+      const handleRemove = () => {
+        setFurniture((prev: FurnitureItemType[]) => prev.filter((item) => item.id !== activeAccordion))
+      }
+    
+      const handleSizeChange = (newSize: "small" | "medium" | "large") => {
+        setFurniture((prev: FurnitureItemType[]) =>
+          prev.map((item) => {
+            if (item.id === activeAccordion) {
+              return {
+                ...item,
+                size: newSize,
+              }
             }
-        }))
-    }
-
-    const handleSizeChange = (newSize: string) => {
-        setSharedState(prev => ({
-            ...prev,
-            [activeAccordion]: {
-                ...prev[activeAccordion],
-                size: newSize
+            return item
+          }),
+        )
+      }
+    
+      const handleRotate = () => {
+        setFurniture((prev: FurnitureItemType[]) =>
+          prev.map((item) => {
+            if (item.id === activeAccordion) {
+              return {
+                ...item,
+                rotation: (item.rotation + Math.PI / 2) % (2 * Math.PI),
+              }
             }
-        }))
-    }
+            return item
+          }),
+        )
+      }
 
     const toggleMenu = () => {
         console.log(menuState)
