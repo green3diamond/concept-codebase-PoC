@@ -2,7 +2,7 @@ export interface FurnitureItem {
   id: string;
   name: string;
   color: string;
-  size: string;
+  size: number;
   type: string;
   position: [number, number, number];
   rotation: number;

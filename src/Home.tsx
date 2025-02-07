@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import Link  from 'next/link';
 import Image from 'next/image';
 import smallLogo from '../public/smallLogo.jpeg'
 import { Button } from '@/components/ui/button'
@@ -45,7 +45,7 @@ export default function Home() {
                             </ul>
                         </div>
                         <div className="p-4 flex justify-center">
-                            <Link className="flex items-center justify-center" to="/appdemo">
+                            <Link className="flex items-center justify-center" href="/appdemo">
                                 <Button size="sm"
                                     className="rect-full"
                                     >

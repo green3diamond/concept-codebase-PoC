@@ -81,7 +81,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
       geomUpper.computeBoundingBox()
     }
 
-    const scale = getSizeScale(item.size) / geomUpper.boundingSphere.radius
+    const scale = item.size / geomUpper.boundingSphere.radius
 
     geomUpper.scale(scale, scale, scale)
   }
@@ -96,18 +96,18 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
     computeAndSetBoundingBox(geomUpper)
   }, [item.size, geomUpper, item]) // Added item to dependencies
 
-  function getSizeScale(size: string): number {
-    switch (size) {
-      case "small":
-        return 0.8
-      case "medium":
-        return 1
-      case "large":
-        return 1.2
-      default:
-        return 1
-    }
-  }
+  // function getSizeScale(size: string): number {
+  //   switch (size) {
+  //     case "small":
+  //       return 0.8
+  //     case "medium":
+  //       return 1
+  //     case "large":
+  //       return 1.2
+  //     default:
+  //       return 1
+  //   }
+  // }
 
   return (
     <mesh
