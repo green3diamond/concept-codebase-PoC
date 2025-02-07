@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
-import { RotateCw, Trash2, Copy, Pencil } from 'lucide-react'
+import { useState } from "react"
+import { RotateCw, Trash2, Copy, Pencil, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -17,26 +12,21 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { colorOptions, sizeOptions } from './utils/furnitureOptions'
-import { FurnitureItem } from './types/furniture'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { colorOptions, sizeOptions } from "./utils/furnitureOptions"
+import type { FurnitureItem } from "./types/furniture"
 
 interface FloatingMenuProps {
-  furniture: FurnitureItem[];
-  onRotate: (id: string) => void;
-  onColorChange: (id: string, color: string) => void;
-  onRemove: (id: string) => void;
-  onSizeChange: (id: string, size: string) => void;
-  onDuplicate: (id: string) => void;
-  menuState: 'open' | 'closed';
-  onToggleMenu: () => void;
-  activeAccordion: string;
-  setActiveAccordion: (value: string) => void;
+  furniture: FurnitureItem[]
+  onRotate: (id: string) => void
+  onColorChange: (id: string, color: string) => void
+  onRemove: (id: string) => void
+  onSizeChange: (id: string, size: string) => void
+  onDuplicate: (id: string) => void
+  menuState: "open" | "closed"
+  onToggleMenu: () => void
+  activeAccordion: string
+  setActiveAccordion: (value: string) => void
 }
 
 /**
@@ -80,23 +70,28 @@ export function FloatingMenu({
   menuState,
   onToggleMenu,
   activeAccordion,
-  setActiveAccordion
+  setActiveAccordion,
 }: FloatingMenuProps) {
   const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false)
   const [selectedFurnitureId, setSelectedFurnitureId] = useState<string | null>(null)
+  //const [isMenuVisible, setIsMenuVisible] = useState(true) //Removed as per update 3
 
   const handleRemove = () => {
     if (selectedFurnitureId) {
-      onRemove(selectedFurnitureId);
-      setIsRemoveDialogOpen(false);
-      setSelectedFurnitureId(null);
-      setActiveAccordion('');
+      onRemove(selectedFurnitureId)
+      setIsRemoveDialogOpen(false)
+      setSelectedFurnitureId(null)
+      setActiveAccordion("")
     }
-  };
+  }
 
   return (
-    <div className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${menuState === 'open' ? 'translate-x-0' : 'translate-x-full'}`}>
-      <Card className={`w-[90vw] max-w-[320px] shadow-lg relative ${menuState === "open" ? "z-50" : ""}`}>
+    <div
+      className={`fixed top-4 right-4 z-20 transition-all duration-300 ${menuState === "open" ? "translate-x-0" : "translate-x-[calc(100%-0.5rem)]"}`}
+    >
+      <Card
+        className={`w-[calc(90vw-0.5rem)] max-w-[319.5px] shadow-lg relative ${menuState === "open" ? "z-50" : ""}`}
+      >
         <Button
           variant="outline"
           size="icon"
@@ -108,7 +103,7 @@ export function FloatingMenu({
           <ChevronLeft className={`h-4 w-4 transition-transform ${menuState === "open" ? "rotate-180" : ""}`} />
         </Button>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">Room Designer</CardTitle>
+          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-primary">Room Designer</CardTitle>
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible value={activeAccordion} onValueChange={setActiveAccordion}>

@@ -1,8 +1,11 @@
 import { createContext, useState } from 'react';
 import { ReactNode } from 'react'
-
+import type { FurnitureItem as FurnitureItemType } from "../../types/furniture"
+import { v4 as uuidv4 } from "uuid"
 
 interface AppContextType {
+    furniture: FurnitureItemType[],
+    setFurniture: (furniture: FurnitureItemType[]) => void,
     sharedState: any,
     setSharedState: (state: any) => void,
     isDragging: boolean,
@@ -20,7 +23,9 @@ interface AppContextType {
     selected: string,
     setSelected: (selected: string) => void,
     hovered: string,
-    hover: (hovered: string) => void
+    hover: (hovered: string) => void,
+    roomDimensions: RoomDimensions,
+    setRoomDimensions: (dimensions: RoomDimensions) => void
 }
 
 /**
@@ -29,6 +34,8 @@ interface AppContextType {
  * @type {AppContextType}
  */
 export const AppContext = createContext<AppContextType>({
+    furniture: [],
+    setFurniture: () => {},
     sharedState: {},
     setSharedState: () => {},
     isDragging: false,
@@ -46,7 +53,9 @@ export const AppContext = createContext<AppContextType>({
     selected: "",
     setSelected: () => {},
     hovered: "",
-    hover: () =>{}
+    hover: () =>{},
+    roomDimensions: {width: 10, length: 10, height: 3},
+    setRoomDimensions: () => {}
 });
 
 
@@ -54,6 +63,11 @@ interface AppProviderProps {
     children: ReactNode
   }
 
+interface RoomDimensions {
+    width: number
+    length: number
+    height: number
+}
 
 /**
  * The AppProvider component.
@@ -115,7 +129,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     })
 
     // Only UI-related states
-    const [menuState, setMenuState] = useState("closed")
+    const [menuState, setMenuState] = useState<"open" | "closed">("closed")
     const [isDragging, setIsDragging] = useState(false)
     const [activeAccordion, setActiveAccordion] = useState("")
     const [isFurnitureBrowserOpen, setIsFurnitureBrowserOpen] = useState(false)
@@ -123,9 +137,27 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     const [isRoomSettingsOpen, setIsRoomSettingsOpen] = useState(false)
     const [selected, setSelected] = useState("")
     const [hovered, hover] = useState("")
+    const [furniture, setFurniture] = useState<FurnitureItemType[]>([
+        {
+          id: uuidv4(),
+          name: "Comfy Couch",
+          rotation: 0,
+          color: "#8A9A5B",
+          size: "small",
+          position: [0, 0, 0],
+          type: "couch",
+        },
+      ])
+    const [roomDimensions, setRoomDimensions] = useState<RoomDimensions>({
+    width: 10,
+    length: 10,
+    height: 3,
+    })
 
     return (
         <AppContext.Provider value={{
+            furniture,
+            setFurniture,
             sharedState,
             setSharedState,
             isDragging,
@@ -143,7 +175,9 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
             selected,
             setSelected,
             hovered,
-            hover
+            hover,
+            roomDimensions,
+            setRoomDimensions
         }}>
             {children}
         </AppContext.Provider>

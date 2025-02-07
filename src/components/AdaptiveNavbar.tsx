@@ -8,6 +8,7 @@ import { RoomSettingsDialog } from "./RoomSettingsDialog"
 
 function AdaptiveNavbar() {
     const {
+        furniture,
         sharedState,
         setSharedState,
         menuState,
@@ -19,7 +20,8 @@ function AdaptiveNavbar() {
         isInspireDialogOpen,
         setIsInspireDialogOpen,
         isRoomSettingsOpen,
-        setIsRoomSettingsOpen
+        setIsRoomSettingsOpen,
+        roomDimensions
     } = useContext(AppContext)
     
     const selectedCouch = activeAccordion ? sharedState[activeAccordion] : sharedState.modSofa
@@ -32,6 +34,10 @@ function AdaptiveNavbar() {
                 rotation: [0, prev[activeAccordion].rotation[1] + Math.PI / 2, 0]
             }
         }))
+    }
+
+    const handleDuplicate = () => {
+        console.log('dup')
     }
 
     const handleColorChange = (newColor: string) => {
@@ -68,17 +74,38 @@ function AdaptiveNavbar() {
         console.log(menuState)
         setMenuState(prevState => prevState === "open" ? "closed" : "open")
     }
+    
+//   const handleAddProposedFurniture = useCallback((proposedFurniture: string[]) => {
+//     const newFurniture = proposedFurniture.map((item) => ({
+//       id: uuidv4(),
+//       name: item,
+//       rotation: 0,
+//       color: "#8A9A5B",
+//       size: "medium",
+//       position: [Math.random() * 5 - 2.5, 0, Math.random() * 5 - 2.5] as [number, number, number],
+//       type: "couch",
+//     }))
+//     setFurniture((prev) => [...prev, ...newFurniture])
+//   }, [])
+
+//   const handleRoomDimensionsChange = useCallback((newDimensions: RoomDimensions) => {
+//     setRoomDimensions(newDimensions)
+//   }, [])
+    const handleAddFurniture = () => {console.log('add')}
+    const handleRoomDimensionsChange = () => {console.log('change')}
+
 
     return (
         <>
             <FloatingMenu 
-                couchName={selectedCouch['name']}
-                couchColor={selectedCouch['name']}
-                onRotate={handleRotate} 
-                onColorChange={handleColorChange} 
-                onRemove={handleRemove}
+                furniture={furniture}
+                onRotate={handleRotate}
+                onColorChange={handleColorChange}
                 onSizeChange={handleSizeChange}
+                onDuplicate={handleDuplicate}
+                onRemove={handleRemove}
                 menuState={menuState}
+                onToggleMenu={toggleMenu}
                 activeAccordion={activeAccordion}
                 setActiveAccordion={setActiveAccordion}
             />
@@ -99,9 +126,22 @@ function AdaptiveNavbar() {
                     }))
                 }}
             />
-            <FurnitureBrowser isOpen={isFurnitureBrowserOpen} onClose={() => setIsFurnitureBrowserOpen(false)} />
-            <InspireDialog isOpen={isInspireDialogOpen} onClose={() => setIsInspireDialogOpen(false)} />
-            <RoomSettingsDialog isOpen={isRoomSettingsOpen} onClose={() => setIsRoomSettingsOpen(false)} />
+            <FurnitureBrowser
+                isOpen={isFurnitureBrowserOpen}
+                onClose={() => setIsFurnitureBrowserOpen(false)}
+                onAddFurniture={handleAddFurniture}
+            />
+            <InspireDialog
+                    isOpen={isInspireDialogOpen}
+                    onClose={() => setIsInspireDialogOpen(false)}
+                    onAddProposedFurniture={handleAddFurniture}
+            />            
+            <RoomSettingsDialog
+                    isOpen={isRoomSettingsOpen}
+                    onClose={() => setIsRoomSettingsOpen(false)}
+                    initialDimensions={roomDimensions}
+                    onDimensionsChange={handleRoomDimensionsChange}
+            />
         </>
     )
 }
