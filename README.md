@@ -7,3 +7,5 @@ To quickly run the project:
 1. install nodejs
 2. install the dependecies using 'npm install'
 3. start the Vite server using 'npm run dev'
+
+Note: Do not run on WSL. Next is very slow on WSL.
