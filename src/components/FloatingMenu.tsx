@@ -21,7 +21,7 @@ interface FloatingMenuProps {
   onRotate: (id: string) => void
   onColorChange: (id: string, color: string) => void
   onRemove: (id: string) => void
-  onSizeChange: (id:string, size: string) => void
+  onSizeChange: (id: string, size: string) => void
   onDuplicate: (id: string) => void
   menuState: "open" | "closed"
   onToggleMenu: () => void
@@ -103,7 +103,7 @@ export function FloatingMenu({
           <ChevronLeft className={`h-4 w-4 transition-transform ${menuState === "open" ? "rotate-180" : ""}`} />
         </Button>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-primary">Room Designer</CardTitle>
+          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">Room Designer</CardTitle>
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible value={activeAccordion} onValueChange={setActiveAccordion}>
