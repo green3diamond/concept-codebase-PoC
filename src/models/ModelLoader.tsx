@@ -38,6 +38,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
   const [clickTime, setClickTime] = useState<number | null>(null)
   const [scaledGeometry, setScaledGeometry] = useState<THREE.BufferGeometry | null>(null)
   const [isGeometryReady, setIsGeometryReady] = useState(false)
+  const materialRef = useRef<THREE.Material | null>(null)
   const meshRef = useRef<THREE.Mesh>(null)
 
   const item: FurnitureItem | undefined = furniture.find((f) => f.id === itemId)
@@ -70,7 +71,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
   const nodesArray = Object.keys(nodes).map((key) => nodes[key])
   const materialsArray = Object.keys(materials).map((key) => materials[key])
   const geomUpper = nodesArray[nodeNum].geometry
-
+  
   function getSizeScale(size: string): number {
     switch (size) {
       case "small": return 0.8
@@ -79,6 +80,37 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
       default: return 1
     }
   }
+  
+  useEffect(() => {
+    if (materialsArray[0] && !materialRef.current) {
+      const baseMaterial = materialsArray[0]
+      const clonedMaterial = baseMaterial.clone()
+      
+      // Preserve original material properties
+      Object.keys(baseMaterial).forEach(key => {
+        if (key !== 'color' && key !== 'id' && baseMaterial[key] !== undefined) {
+          clonedMaterial[key] = baseMaterial[key]
+        }
+      })
+
+      // Apply the item's color while preserving material properties
+      clonedMaterial.color = new THREE.Color(item.color)
+      
+      // Ensure proper material settings
+      clonedMaterial.needsUpdate = true
+      clonedMaterial.side = THREE.DoubleSide
+      
+      materialRef.current = clonedMaterial
+    }
+  }, [materialsArray, item.color])
+
+  // Update material color when item color changes
+  useEffect(() => {
+    if (materialRef.current) {
+      materialRef.current.color = new THREE.Color(item.color)
+      materialRef.current.needsUpdate = true
+    }
+  }, [item.color])
 
   const initializeGeometry = useCallback(() => {
     if (!geomUpper) return
@@ -135,11 +167,9 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
         ref={meshRef}
         castShadow={true} 
         name={item.name} 
-        geometry={scaledGeometry} 
-        material={materialsArray[0]}
-      >
-        <meshStandardMaterial color={item.color} />
-      </mesh>
+        geometry={scaledGeometry}
+        material={materialRef.current}
+      />
       {isEditVisible && (
         <Html position={[1, 1, 0]}>
           <BadgeButton
