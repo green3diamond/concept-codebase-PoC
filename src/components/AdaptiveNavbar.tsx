@@ -84,7 +84,7 @@ function AdaptiveNavbar() {
       }
 
     const toggleMenu = () => {
-        console.log(menuState)
+        // console.log(menuState)
         setMenuState(prevState => prevState === "open" ? "closed" : "open")
     }
     
