@@ -34,7 +34,7 @@ function AdaptiveNavbar() {
         handleAddFurniture({
           ...itemToDuplicate,
           id: uuidv4(),
-          position: [itemToDuplicate.position[0] + 1, itemToDuplicate.position[1], itemToDuplicate.position[2] + 1],
+          position: [itemToDuplicate.position[0]+3, itemToDuplicate.position[1], itemToDuplicate.position[2]],
         })
       }
     }
@@ -98,7 +98,7 @@ function AdaptiveNavbar() {
           rotation: 0,
           originalSize: item.originalSize,
           size: item.size,
-          position: [0, 0, 0] as [number, number, number],
+          position: item.position,
           name: item.name,
           isEditVisible: false,
           type: item.type,

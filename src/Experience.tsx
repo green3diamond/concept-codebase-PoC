@@ -44,8 +44,8 @@ export default function Experience() {
             makeDefault
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI * (1 / 2 - 1 / 20)}
-            maxAzimuthAngle={0}
-            minAzimuthAngle={-Math.PI / 2}
+            // maxAzimuthAngle={0}
+            // minAzimuthAngle={-Math.PI / 2}
             enableZoom={false}
         />
 
@@ -59,9 +59,9 @@ export default function Experience() {
             key={item.id}
             axisLock="y"
             dragLimits={[
-                [item.position[0] - 4, item.position[0] + 3],
+                [-3 -item.position[0], 3-item.position[0]],
                 undefined,
-                [item.position[2] - 4, item.position[2] + 3]
+                [-3-item.position[2], 3-item.position[2]]
             ]}
             >
             <ModelLoader

@@ -49,11 +49,11 @@ const colorPalettes = [
 ]
 
 const materials = [
-  { value: "wood", label: "Wood", image: "/placeholder.svg?height=50&width=50" },
-  { value: "metal", label: "Metal", image: "/placeholder.svg?height=50&width=50" },
-  { value: "glass", label: "Glass", image: "/placeholder.svg?height=50&width=50" },
-  { value: "leather", label: "Leather", image: "/placeholder.svg?height=50&width=50" },
-  { value: "fabric", label: "Fabric", image: "/placeholder.svg?height=50&width=50" },
+  { value: "wood", label: "Wood", image: "/placeholder.jpg" },
+  { value: "metal", label: "Metal", image: "/placeholder.jpg" },
+  { value: "glass", label: "Glass", image: "/placeholder.jpg" },
+  { value: "leather", label: "Leather", image: "/placeholder.jpg" },
+  { value: "fabric", label: "Fabric", image: "/placeholder.jpg" },
 ]
 
 const roomTypes = [

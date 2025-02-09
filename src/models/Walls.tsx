@@ -24,5 +24,21 @@ export default function Walls() {
             />
             <planeGeometry />
         </mesh>
+
+         {/* Wall 3 */}
+         <mesh position={[0, 1.5, 5]} rotation-x={- Math.PI } scale={[10, 5, 1]} receiveShadow={true} >
+            <meshPhongMaterial
+                color={materialProps.color}
+            />
+            <planeGeometry />
+        </mesh>
+
+        {/* Wall 4 */}
+        <mesh position={[-5, 1.5, 0]} rotation-y={Math.PI * 0.5} scale={[10, 5, 1]} receiveShadow={true} >
+            <meshPhongMaterial
+                color={materialProps.color}
+            />
+            <planeGeometry />
+        </mesh>
     </>
 }

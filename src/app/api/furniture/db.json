@@ -16,7 +16,8 @@
         "nickname": "bubbly",
         "type": "sofa",
         "originalSize": 1.4,
-        "fileName": "./bubblyRot2.glb"
+        "fileName": "./bubblyRot2.glb",
+        "image": "./placeholder.jpg"
       },
       {
         "id": "sofa2",
@@ -26,28 +27,29 @@
         "nickname": "modSofa",
         "type": "sofa",
         "originalSize": 2.5,
-        "fileName": "./modernSofa2.glb"
+        "fileName": "./modernSofa2.glb",
+        "image": "./placeholder.jpg"
       }
     ],
     "chairs": [
-      { "id": "chair1", "name": "Dining Chair", "measurements": "45cm x 55cm 85cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#8B4513", "#A52A2A", "#D2691E"] },
-      { "id": "chair2", "name": "Office Chair", "measurements": "65cm x 110cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#000000", "#808080", "#C0C0C0"] },
-      { "id": "chair3", "name": "Accent Chair", "measurements": "70cm x 75cm 80cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FF69B4", "#FF1493", "#C71585"] }
+      { "id": "chair1", "name": "Dining Chair", "measurements": "45cm x 55cm 85cm", "image": "./placeholder.jpg", "colors": ["#8B4513", "#A52A2A", "#D2691E"] },
+      { "id": "chair2", "name": "Office Chair", "measurements": "65cm x 110cm", "image": "./placeholder.jpg", "colors": ["#000000", "#808080", "#C0C0C0"] },
+      { "id": "chair3", "name": "Accent Chair", "measurements": "70cm x 75cm 80cm", "image": "./placeholder.jpg", "colors": ["#FF69B4", "#FF1493", "#C71585"] }
     ],
     "beds": [
-      { "id": "bed1", "name": "Queen Bed", "measurements": "160cm x 200cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#8B4513", "#D2691E", "#CD853F"] },
-      { "id": "bed2", "name": "King Bed", "measurements": "180cm x 200cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#2F4F4F", "#708090", "#778899"] },
-      { "id": "bed3", "name": "Bunk Bed", "measurements": "90cm x 200cm (each bed)", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FF6347", "#FF4500", "#FF8C00"] }
+      { "id": "bed1", "name": "Queen Bed", "measurements": "160cm x 200cm", "image": "./placeholder.jpg", "colors": ["#8B4513", "#D2691E", "#CD853F"] },
+      { "id": "bed2", "name": "King Bed", "measurements": "180cm x 200cm", "image": "./placeholder.jpg", "colors": ["#2F4F4F", "#708090", "#778899"] },
+      { "id": "bed3", "name": "Bunk Bed", "measurements": "90cm x 200cm (each bed)", "image": "./placeholder.jpg", "colors": ["#FF6347", "#FF4500", "#FF8C00"] }
     ],
     "tables": [
-      { "id": "table1", "name": "Dining Table", "measurements": "180cm x 90cm 75cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#8B4513", "#D2691E", "#CD853F"] },
-      { "id": "table2", "name": "Coffee Table", "measurements": "120cm x 60cm 45cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#2F4F4F", "#708090", "#778899"] },
-      { "id": "table3", "name": "Side Table", "measurements": "45cm x 55cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#B8860B", "#DAA520", "#FFD700"] }
+      { "id": "table1", "name": "Dining Table", "measurements": "180cm x 90cm 75cm", "image": "./placeholder.jpg", "colors": ["#8B4513", "#D2691E", "#CD853F"] },
+      { "id": "table2", "name": "Coffee Table", "measurements": "120cm x 60cm 45cm", "image": "./placeholder.jpg", "colors": ["#2F4F4F", "#708090", "#778899"] },
+      { "id": "table3", "name": "Side Table", "measurements": "45cm x 55cm", "image": "./placeholder.jpg", "colors": ["#B8860B", "#DAA520", "#FFD700"] }
     ],
     "lamps": [
-      { "id": "lamp1", "name": "Floor Lamp", "measurements": "35cm x 150cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FFD700", "#FFA500", "#FF8C00"] },
-      { "id": "lamp2", "name": "Table Lamp", "measurements": "30cm x 50cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#00CED1", "#48D1CC", "#40E0D0"] },
-      { "id": "lamp3", "name": "Pendant Light", "measurements": "40cm diameter x 50cm height", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FF69B4", "#FF1493", "#C71585"] }
+      { "id": "lamp1", "name": "Floor Lamp", "measurements": "35cm x 150cm", "image": "./placeholder.jpg", "colors": ["#FFD700", "#FFA500", "#FF8C00"] },
+      { "id": "lamp2", "name": "Table Lamp", "measurements": "30cm x 50cm", "image": "./placeholder.jpg", "colors": ["#00CED1", "#48D1CC", "#40E0D0"] },
+      { "id": "lamp3", "name": "Pendant Light", "measurements": "40cm diameter x 50cm height", "image": "./placeholder.jpg", "colors": ["#FF69B4", "#FF1493", "#C71585"] }
     ]
   }
 }

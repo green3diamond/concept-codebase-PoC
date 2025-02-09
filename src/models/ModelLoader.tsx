@@ -31,8 +31,8 @@ type ModelLoaderProps = {
   occlude?: boolean
 }
 
-export default function ModelLoader({ itemId, file, nodeNum, reference, occlude = false }: ModelLoaderProps) {
-  const { furniture, setFurniture, setSelected, setActiveAccordion, menuState, setMenuState, setIsDragging } = useContext(AppContext)
+export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelLoaderProps) {
+  const { furniture, selected, setSelected, setActiveAccordion, menuState, setMenuState, setIsDragging } = useContext(AppContext)
   const { nodes, materials } = useGLTF(file)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [clickTime, setClickTime] = useState<number | null>(null)
@@ -62,9 +62,13 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
       setMenuState("open")
       setSelected(id)
       setActiveAccordion(id)
-    } else {
+    }else if (selected === id) {
       setMenuState("closed")
       setActiveAccordion("")
+    } 
+    else {
+      setSelected(id)
+      setActiveAccordion(id)
     }
   }
 

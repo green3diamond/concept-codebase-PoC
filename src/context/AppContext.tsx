@@ -144,7 +144,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
             rotation:0,
             originalSize: 1.4,
             size: "medium",
-            position: [-2, -0.25, 2],
+            position: [-2, -0.5, 2],
             name: "Bubbly Couch",
             isEditVisible: false,
             nickname: "bubbly",
