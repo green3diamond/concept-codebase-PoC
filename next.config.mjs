@@ -1,20 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export', // Outputs a Single-Page Application (SPA).
-    distDir: './dist', // Changes the build output directory to `./dist/`.
-    images: {
-      unoptimized: true, // Add this line
-    },
+    reactStrictMode: true,
     // webpack: (config, { dev, isServer }) => {
+    //   // This is only needed for development builds
     //   if (dev && !isServer) {
-    //     config.watchOptions = {
-    //       poll: 1000, // Check for changes every second
-    //       aggregateTimeout: 300, // Delay before rebuilding
-    //       ignored: '/node_modules/', // Ignore node_modules
-    //     };
+    //     config.experiments = {
+    //       ...config.experiments,
+    //       topLevelAwait: true,
+    //       layers: true  // Enable the layers experiment
+    //     }
     //   }
-    //   return config;
+    //   return config
     // },
 }
   export default nextConfig
+
   

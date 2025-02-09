@@ -21,7 +21,7 @@ interface FloatingMenuProps {
   onRotate: (id: string) => void
   onColorChange: (id: string, color: string) => void
   onRemove: (id: string) => void
-  onSizeChange: (id: string, size: string) => void
+  onSizeChange: (id:string, size: string) => void
   onDuplicate: (id: string) => void
   menuState: "open" | "closed"
   onToggleMenu: () => void

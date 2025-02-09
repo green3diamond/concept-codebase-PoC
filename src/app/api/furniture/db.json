@@ -8,9 +8,26 @@
   ],
   "furniture": {
     "sofas": [
-      { "id": "sofa1", "name": "Comfy Couch", "measurements": "200cm x 90cm 85cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FF0000", "#00FF00", "#0000FF"] },
-      { "id": "sofa2", "name": "Modern Sofa", "measurements": "180cm x 85cm 80cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FFA500", "#800080", "#008080"] },
-      { "id": "sofa3", "name": "Sectional Sofa", "measurements": "270cm x 200cm 85cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#FFD700", "#4B0082", "#00CED1"] }
+      {
+        "id": "sofa1",
+        "name": "Bubbly Couch",
+        "measurements": "200cm x 90cm 85cm",
+        "colors": ["#8A9A5B", "#00FF00", "#0000FF"],
+        "nickname": "bubbly",
+        "type": "sofa",
+        "originalSize": 1.4,
+        "fileName": "./bubblyRot2.glb"
+      },
+      {
+        "id": "sofa2",
+        "name": "Modern Sofa",
+        "measurements": "180cm x 85cm 80cm",
+        "colors": ["#FFA500", "#800080", "#008080"],
+        "nickname": "modSofa",
+        "type": "sofa",
+        "originalSize": 2.5,
+        "fileName": "./modernSofa2.glb"
+      }
     ],
     "chairs": [
       { "id": "chair1", "name": "Dining Chair", "measurements": "45cm x 55cm 85cm", "image": "/placeholder.svg?height=200&width=300", "colors": ["#8B4513", "#A52A2A", "#D2691E"] },

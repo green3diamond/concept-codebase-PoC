@@ -137,24 +137,26 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     const [isRoomSettingsOpen, setIsRoomSettingsOpen] = useState(false)
     const [selected, setSelected] = useState("")
     const [hovered, hover] = useState("")
-    const [furniture, setFurniture] = useState<FurnitureItemType[]>([
+    const [furniture, setFurniture] = useState<FurnitureItem[]>([
         {
             id: uuidv4(),
             color: "#8A9A5B",
             rotation:0,
-            size: 1.4,
+            originalSize: 1.4,
+            size: "medium",
             position: [-2, -0.25, 2],
             name: "Bubbly Couch",
             isEditVisible: false,
             nickname: "bubbly",
-            type: "couch",
+            type: "sofa",
             fileName: './bubblyRot2.glb'
         },
         {
             id: uuidv4(),
             color: "#8A9A5B",
             rotation: 0,
-            size: 2.5,
+            originalSize: 2.5,
+            size: "medium",
             position: [0, -1, -3],
             name: "Modern Sofa",
             isEditVisible: false,

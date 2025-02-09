@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useCallback, useContext } from "react"
 import { AppContext } from "../context/AppContext"
 import { FloatingMenu } from "./FloatingMenu"
 import { FloatingNavigation } from "./FloatingNavigation"
@@ -6,6 +6,7 @@ import { FurnitureBrowser } from "./FurnitureBrowser"
 import { InspireDialog } from "./InspireDialog"
 import { RoomSettingsDialog } from "./RoomSettingsDialog"
 import type { FurnitureItem as FurnitureItemType } from "../../types/furniture"
+import { v4 as uuidv4 } from "uuid"
 
 function AdaptiveNavbar() {
     const {
@@ -27,14 +28,21 @@ function AdaptiveNavbar() {
     } = useContext(AppContext)
     
     
-    const handleDuplicate = () => {
-        console.log('dup')
+    const handleDuplicate = (id:string) => {
+      const itemToDuplicate = furniture.find((f) => f.id === id)
+      if (itemToDuplicate) {
+        handleAddFurniture({
+          ...itemToDuplicate,
+          id: uuidv4(),
+          position: [itemToDuplicate.position[0] + 1, itemToDuplicate.position[1], itemToDuplicate.position[2] + 1],
+        })
+      }
     }
 
-    const handleColorChange = (newColor: string) => {
+    const handleColorChange = (id:string, newColor: string) => {
         setFurniture((prev: FurnitureItemType[]) =>
           prev.map((item) => {
-            if (item.id === activeAccordion) {
+            if (item.id === id) {
               return {
                 ...item,
                 color: newColor,
@@ -49,17 +57,18 @@ function AdaptiveNavbar() {
         setFurniture((prev: FurnitureItemType[]) => prev.filter((item) => item.id !== activeAccordion))
       }
     
-      const handleSizeChange = (newSize: "small" | "medium" | "large") => {
+      const handleSizeChange = ( id:string, newSize: string) => {
+        console.log(furniture)
         setFurniture((prev: FurnitureItemType[]) =>
-          prev.map((item) => {
-            if (item.id === activeAccordion) {
-              return {
-                ...item,
-                size: newSize,
+            prev.map((item) => {
+              if (item.id === id) {
+                return {
+                  ...item,
+                  size: newSize,
+                }
               }
-            }
-            return item
-          }),
+              return item
+            }),
         )
       }
     
@@ -82,23 +91,46 @@ function AdaptiveNavbar() {
         setMenuState(prevState => prevState === "open" ? "closed" : "open")
     }
     
-//   const handleAddProposedFurniture = useCallback((proposedFurniture: string[]) => {
-//     const newFurniture = proposedFurniture.map((item) => ({
-//       id: uuidv4(),
-//       name: item,
-//       rotation: 0,
-//       color: "#8A9A5B",
-//       size: "medium",
-//       position: [Math.random() * 5 - 2.5, 0, Math.random() * 5 - 2.5] as [number, number, number],
-//       type: "couch",
-//     }))
-//     setFurniture((prev) => [...prev, ...newFurniture])
-//   }, [])
+    const handleAddFurniture = useCallback(
+      (item: FurnitureItemType) => {
+        const newFurniture = {
+          id: uuidv4(),
+          color: item.color,
+          rotation: 0,
+          originalSize: item.originalSize,
+          size: item.size,
+          position: [0, 0, 0] as [number, number, number],
+          name: item.name,
+          isEditVisible: false,
+          type: item.type,
+          fileName: item.fileName
+        }
+        setFurniture((prevFurniture) => [...prevFurniture, newFurniture])
+      },
+      [setFurniture],
+    )
 
-//   const handleRoomDimensionsChange = useCallback((newDimensions: RoomDimensions) => {
-//     setRoomDimensions(newDimensions)
-//   }, [])
-    const handleAddFurniture = () => {console.log('add')}
+    
+  const handleAddProposedFurniture = useCallback(
+    (proposedFurniture: string[]) => {
+      proposedFurniture.forEach((item) => {
+        handleAddFurniture({
+          id: uuidv4(),
+          color: "#8A9A5B",
+          rotation: 0,
+          originalSize: 1,
+          size: "medium",
+          position: [Math.random() * 5 - 2.5, 0, Math.random() * 5 - 2.5],
+          name: item,
+          isEditVisible: false,
+          type: "sofa",
+          fileName: './bubblyRot2.glb'
+        })
+      })
+    },
+    [handleAddFurniture],
+  )
+
     const handleRoomDimensionsChange = () => {console.log('change')}
 
 
@@ -141,7 +173,7 @@ function AdaptiveNavbar() {
             <InspireDialog
                     isOpen={isInspireDialogOpen}
                     onClose={() => setIsInspireDialogOpen(false)}
-                    onAddProposedFurniture={handleAddFurniture}
+                    onAddProposedFurniture={handleAddProposedFurniture}
             />            
             <RoomSettingsDialog
                     isOpen={isRoomSettingsOpen}

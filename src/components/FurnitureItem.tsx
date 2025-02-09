@@ -4,8 +4,8 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { Button } from "@/components/ui/button"
 import { Pencil } from 'lucide-react'
-import { sizeToLength } from '../utils/furnitureOptions'
-import { FurnitureItem as FurnitureItemType } from '../types/furniture'
+import { sizeToLength } from './utils/furnitureOptions'
+import { FurnitureItem as FurnitureItemType } from './types/furniture'
 
 interface FurnitureItemProps extends FurnitureItemType {
   onDrag: (newPosition: [number, number, number]) => void

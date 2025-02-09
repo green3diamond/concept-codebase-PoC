@@ -1,4 +1,4 @@
-import { ColorOption, SizeOption } from "./types/furniture";
+import { ColorOption, SizeOption } from "../../../types/furniture";
 
 export const colorOptions: ColorOption[] = [
   { label: "Sage", color: "bg-[#8A9A5B]", value: "#8A9A5B", name: "Herbal Sage" },
@@ -9,8 +9,7 @@ export const colorOptions: ColorOption[] = [
 export const sizeOptions: SizeOption[] = [
   { label: "Small", measurement: "160 cm", value: "small" },
   { label: "Medium", measurement: "200 cm", value: "medium" },
-  { label: "Large", measurement: "240 cm", value: "large" },
-  { label: "XL", measurement: "280 cm", value: "xl" },
+  { label: "Large", measurement: "240 cm", value: "large" }
 ];
 
 export const sizeToLength: Record<string, number> = {
