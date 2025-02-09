@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import type { FurnitureItem } from "../../types/furniture"
 
 interface FurnitureBrowserProps {
   isOpen: boolean
@@ -29,14 +30,6 @@ interface Category {
   icon: string
 }
 
-interface FurnitureItem {
-  id: string
-  name: string
-  measurements: string
-  image: string
-  colors: string[]
-  type: string;
-}
 
 const iconMap = {
   Sofa,
@@ -126,7 +119,7 @@ export function FurnitureBrowser({ isOpen, onClose, onAddFurniture }: FurnitureB
                       variant="secondary" 
                       size="icon" 
                       className="shrink-0 bg-zinc-900/10 hover:bg-zinc-900/20 dark:bg-zinc-900/20 dark:hover:bg-zinc-900/30 dark:bg-zinc-50/10 dark:hover:bg-zinc-50/20 dark:dark:bg-zinc-50/20 dark:dark:hover:bg-zinc-50/30"
-                      onClick={() => onAddFurniture({...item, type: selectedCategory})}
+                      onClick={() => onAddFurniture({...item, color:item.colors[0], position: [Math.random() * 5 - 2.5, 0, Math.random() * 5 - 2.5], type: selectedCategory})}
                     >
                       <Plus className="h-4 w-4" />
                       <span className="sr-only">Add to room</span>
