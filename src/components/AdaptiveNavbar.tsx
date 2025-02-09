@@ -58,7 +58,6 @@ function AdaptiveNavbar() {
       }
     
       const handleSizeChange = ( id:string, newSize: string) => {
-        console.log(furniture)
         setFurniture((prev: FurnitureItemType[]) =>
             prev.map((item) => {
               if (item.id === id) {

@@ -1,15 +1,13 @@
-"use client"
-
+import { RefObject, useContext, useEffect, useRef, useState, useCallback } from 'react'
 import { useGLTF, Html } from "@react-three/drei"
-import { useEffect, useContext, useState, Suspense } from "react"
+import { useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 import { AppContext } from "../context/AppContext"
 import Placeholder from "./Placeholder"
 import { Button } from "@/components/ui/button"
-import { Pencil } from "lucide-react"
+import { Pencil } from 'lucide-react'
 import type { ThreeEvent } from "@react-three/fiber"
-import type React from "react"
-import type * as THREE from "three"
-import { FurnitureItem } from "types/furniture"
+import type { FurnitureItem } from "types/furniture"
 
 function BadgeButton({ onClick }: { onClick: () => void }) {
   return (
@@ -29,21 +27,21 @@ type ModelLoaderProps = {
   itemId: string
   file: string
   nodeNum: number
-  reference: React.RefObject<THREE.Mesh>
+  reference: RefObject<THREE.Mesh>
   occlude?: boolean
 }
 
 export default function ModelLoader({ itemId, file, nodeNum, reference, occlude = false }: ModelLoaderProps) {
-  const { furniture, setFurniture, setSelected, setActiveAccordion, menuState, setMenuState, setIsDragging } =
-    useContext(AppContext)
+  const { furniture, setFurniture, setSelected, setActiveAccordion, menuState, setMenuState, setIsDragging } = useContext(AppContext)
   const { nodes, materials } = useGLTF(file)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [clickTime, setClickTime] = useState<number | null>(null)
-  const [scaledGeometry, setScaledGeometry] = useState(null)
+  const [scaledGeometry, setScaledGeometry] = useState<THREE.BufferGeometry | null>(null)
   const [isGeometryReady, setIsGeometryReady] = useState(false)
-  
-  const item:FurnitureItem = furniture.find((f) => f.id === itemId)
-  if (!item) return null // If item not found, don't render anything
+  const meshRef = useRef<THREE.Mesh>(null)
+
+  const item: FurnitureItem | undefined = furniture.find((f) => f.id === itemId)
+  if (!item) return null
 
   const handlePointerDown = () => {
     setIsDragging(true)
@@ -69,53 +67,58 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
     }
   }
 
-  // convert the node object to an array
   const nodesArray = Object.keys(nodes).map((key) => nodes[key])
   const materialsArray = Object.keys(materials).map((key) => materials[key])
-
   const geomUpper = nodesArray[nodeNum].geometry
 
-  function computeAndSetBoundingBox(geomUpper: THREE.BufferGeometry) {
-    if (!geomUpper.boundingSphere) {
-      geomUpper.computeBoundingSphere()
+  function getSizeScale(size: string): number {
+    switch (size) {
+      case "small": return 0.8
+      case "medium": return 1
+      case "large": return 1.2
+      default: return 1
     }
-
-    if (!geomUpper.boundingBox) {
-      geomUpper.computeBoundingBox()
-    }
-
-    const scale = item.originalSize * getSizeScale(item.size) / geomUpper.boundingSphere.radius
-
-    geomUpper.scale(scale, scale, scale)
   }
+
+  const initializeGeometry = useCallback(() => {
+    if (!geomUpper) return
+
+    const newGeometry = geomUpper.clone()
+    if (!newGeometry.boundingSphere) {
+      newGeometry.computeBoundingSphere()
+    }
+    if (!newGeometry.boundingBox) {
+      newGeometry.computeBoundingBox()
+    }
+
+    if (newGeometry.boundingSphere) {
+      const scale = item.originalSize * getSizeScale(item.size) / newGeometry.boundingSphere.radius
+      newGeometry.scale(scale, scale, scale)
+      setScaledGeometry(newGeometry)
+      setIsGeometryReady(true)
+    } else {
+      console.warn('Failed to compute bounding sphere for', item.name)
+    }
+  }, [geomUpper, item.originalSize, item.size, item.name])
+
+  useEffect(() => {
+    initializeGeometry()
+  }, [initializeGeometry])
 
   useEffect(() => {
     if (reference.current) {
       reference.current.rotation.y = item.rotation
     }
   }, [item.rotation, reference])
-  
-  // useEffect(() => {
-    //   computeAndSetBoundingBox(scaledGeometry)
-    // }, [item.size, geomUpper, item, reference])
-    
-    useEffect(() => {
-      const scaledGeometry = geomUpper.clone() // Clone the geometry
-      computeAndSetBoundingBox(scaledGeometry)
-      setScaledGeometry(scaledGeometry)
-  }, [item.size, geomUpper, item]) 
 
-  function getSizeScale(size: string): number {
-    switch (size) {
-      case "small":
-        return 0.8
-      case "medium":
-        return 1
-      case "large":
-        return 1.2
-      default:
-        return 1
+  useFrame(() => {
+    if (meshRef.current && !isGeometryReady) {
+      initializeGeometry()
     }
+  })
+
+  if (!isGeometryReady || !scaledGeometry) {
+    return <Placeholder />
   }
 
   return (
@@ -126,13 +129,17 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       rotation={[0, item.rotation, 0]}
-      key={`${item.id}-${item.size}-${item.color}`} // This is important to force re-render when size changes
-  >
-      <Suspense fallback={<Placeholder />}>
-        <mesh castShadow={true} name={item.name} geometry={scaledGeometry} material={materialsArray[0]}>
-          <meshStandardMaterial color={item.color} />
-        </mesh>
-      </Suspense>
+      key={`${item.id}-${item.size}-${item.color}`}
+    >
+      <mesh 
+        ref={meshRef}
+        castShadow={true} 
+        name={item.name} 
+        geometry={scaledGeometry} 
+        material={materialsArray[0]}
+      >
+        <meshStandardMaterial color={item.color} />
+      </mesh>
       {isEditVisible && (
         <Html position={[1, 1, 0]}>
           <BadgeButton
@@ -146,4 +153,3 @@ export default function ModelLoader({ itemId, file, nodeNum, reference, occlude 
     </mesh>
   )
 }
-
