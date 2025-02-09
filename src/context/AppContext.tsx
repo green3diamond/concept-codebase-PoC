@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from "uuid"
 interface AppContextType {
     furniture: FurnitureItem[],
     setFurniture: Dispatch<SetStateAction<FurnitureItem[]>>,
-    sharedState: any,
-    setSharedState: (state: any) => void,
     isDragging: boolean,
     setIsDragging: (isDragging: boolean) => void,
     menuState: string,
@@ -36,8 +34,6 @@ interface AppContextType {
 export const AppContext = createContext<AppContextType>({
     furniture: [],
     setFurniture: () => {},
-    sharedState: {},
-    setSharedState: () => {},
     isDragging: false,
     setIsDragging: () => {},
     menuState: "closed",
@@ -74,23 +70,7 @@ interface RoomDimensions {
  * 
  * @param {React.ReactNode} props.children - The child components which are relevant for the app context and will be globaly accessible.
  * @returns {JSX.Element} - The JSX element representing the AppProvider component.
- * 
- * State Structure:
- * sharedState: {
- *   bubbly: {
- *     color: string - Couch color in hex
- *     rotation: number[] - [x, y, z] rotation values
- *     isVisible: boolean - Visibility toggle
- *     size: string - Couch size ('small'|'medium'|'large'|'xl')
- *     position: number[] - [x, y, z] position coordinates
- *     name: string - Display name
- *     isEditVisible: boolean - Edit controls visibility
- *   },
- *   modSofa: {
- *     // Same structure as bubbly
- *   }
- * }
- * 
+ *  * 
  * UI States:
  * - isDragging: boolean - Tracks drag state
  * - menuState: string - Menu visibility state ('open'|'closed')
@@ -102,32 +82,6 @@ interface RoomDimensions {
  * - hovered: string - Currently hovered item
  */
 export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
-    /**
-     * The shared state object. Contains information about the chosen materials of the different obejcts.
-     * 
-     * @type {Dictionary}
-     */
-    const [sharedState, setSharedState] = useState({
-        "bubbly": {
-            "color": "#8A9A5B",
-            "rotation": [0, 0, 0],
-            "isVisible": true,
-            "size": "medium",
-            "position": [0, 0, 0],
-            "name": "Bubbly Couch",
-            "isEditVisible": false
-        },
-        "modSofa": {
-            "color": "#8A9A5B",
-            "rotation": [0, 0, 0],
-            "isVisible": true,
-            "size": "medium",
-            "position": [0, 0, 0],
-            "name": "Modern Sofa",
-            "isEditVisible": false
-        }
-    })
-
     // Only UI-related states
     const [menuState, setMenuState] = useState<"open" | "closed">("closed")
     const [isDragging, setIsDragging] = useState(false)
@@ -175,8 +129,6 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
         <AppContext.Provider value={{
             furniture,
             setFurniture,
-            sharedState,
-            setSharedState,
             isDragging,
             setIsDragging,
             menuState,

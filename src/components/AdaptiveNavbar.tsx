@@ -12,8 +12,6 @@ function AdaptiveNavbar() {
     const {
         furniture,
         setFurniture,
-        sharedState,
-        setSharedState,
         menuState,
         setMenuState,
         activeAccordion,
@@ -129,6 +127,16 @@ function AdaptiveNavbar() {
     },
     [handleAddFurniture],
   )
+  
+  const updateFurnitureEditVisibility = (isVisible: boolean) => {
+    setFurniture(prevFurniture => 
+      prevFurniture.map(item => 
+        item.id === activeAccordion
+          ? { ...item, isEditVisible: isVisible }
+          : item
+      )
+    );
+  };
 
     const handleRoomDimensionsChange = () => {console.log('change')}
 
@@ -154,15 +162,7 @@ function AdaptiveNavbar() {
                 setIsInspireDialogOpen={setIsInspireDialogOpen}
                 isRoomSettingsOpen={isRoomSettingsOpen}
                 setIsRoomSettingsOpen={setIsRoomSettingsOpen}
-                setIsCouchEditVisible={(isVisible) => {
-                    setSharedState(prev => ({
-                        ...prev,
-                        [activeAccordion]: {
-                            ...prev[activeAccordion],
-                            isEditVisible: isVisible
-                        }
-                    }))
-                }}
+                setIsCouchEditVisible={updateFurnitureEditVisibility}
             />
             <FurnitureBrowser
                 isOpen={isFurnitureBrowserOpen}
