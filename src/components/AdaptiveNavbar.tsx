@@ -128,6 +128,7 @@ function AdaptiveNavbar() {
     [handleAddFurniture],
   )
   
+  // TODO - Implement this function, or fix, or remove
   const updateFurnitureEditVisibility = (isVisible: boolean) => {
     setFurniture(prevFurniture => 
       prevFurniture.map(item => 
