@@ -83,7 +83,7 @@ interface RoomDimensions {
  */
 export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     // Only UI-related states
-    const [menuState, setMenuState] = useState<"open" | "closed">("closed")
+    const [menuState, setMenuState] = useState("closed")
     const [isDragging, setIsDragging] = useState(false)
     const [activeAccordion, setActiveAccordion] = useState("")
     const [isFurnitureBrowserOpen, setIsFurnitureBrowserOpen] = useState(false)

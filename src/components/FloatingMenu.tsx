@@ -23,7 +23,7 @@ interface FloatingMenuProps {
   onRemove: (id: string) => void
   onSizeChange: (id: string, size: string) => void
   onDuplicate: (id: string) => void
-  menuState: "open" | "closed"
+  menuState: string
   onToggleMenu: () => void
   activeAccordion: string
   setActiveAccordion: (value: string) => void
@@ -183,7 +183,7 @@ export function FloatingMenu({
         </CardContent>
       </Card>
 
-      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen} className="z-[100]">
+      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Remove Furniture</DialogTitle>

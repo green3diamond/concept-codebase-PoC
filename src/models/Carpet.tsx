@@ -1,4 +1,5 @@
 import { useGLTF } from "@react-three/drei"
+import {Mesh} from 'three'
 /**
  * This function represents a 3D carpet model loaded from a GLB file.
  * It uses the useGLTF hook from the @react-three/drei library to load the model.
@@ -12,7 +13,7 @@ export default function Carpet() {
     // Carpet_white, Carpet_patterned
     return <mesh
         name="carpet"
-        geometry={nodes.Carpet1_low_Carpet_white_0.geometry}
+        geometry={(nodes.Carpet1_low_Carpet_white_0 as Mesh).geometry}
         material={materials.Carpet_white}
         material-color='#B89FF5'
         scale={[3, 4.5, 1]}

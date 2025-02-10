@@ -10,6 +10,9 @@ export interface FurnitureItem {
   isEditVisible?: boolean;
   nickname?: string;
   fileName: string;
+  image?:string;
+  colors?: string[];
+  measurements?: string[];
 }
 
 export interface ColorOption {

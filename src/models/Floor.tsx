@@ -51,18 +51,16 @@ export default function Floor() {
 
 
     return <mesh position-y={- 1} rotation-x={- Math.PI * 0.5} scale={10} receiveShadow={true}>
-        <planeGeometry receiveShadow={true} />
+        <planeGeometry/>
 
         <MeshReflectorMaterial
             map={colorMap}
             // normalMap={normalMap}
             roughnessMap={roughnessMap}
-            metlanessMap={metlanessMap}
-            receiveShadow={true}
+            metalnessMap={metlanessMap}
             mixStrength={0.4}
             mixContrast={0.2}
-            roughness={1}
-        />
+            roughness={1} mirror={0}        />
     </mesh>
 }
 

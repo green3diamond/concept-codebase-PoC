@@ -1,7 +1,7 @@
 import { RefObject, useContext, useEffect, useRef, useState, useCallback } from 'react'
 import { useGLTF, Html } from "@react-three/drei"
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { Mesh, BufferGeometry, Material, Color, DoubleSide, MeshStandardMaterial } from 'three'
 import { AppContext } from "../context/AppContext"
 import Placeholder from "./Placeholder"
 import { Button } from "@/components/ui/button"
@@ -9,7 +9,7 @@ import { Pencil } from 'lucide-react'
 import type { ThreeEvent } from "@react-three/fiber"
 import type { FurnitureItem } from "types/furniture"
 
-function BadgeButton({ onClick }: { onClick: () => void }) {
+function BadgeButton({ onClick }: { onClick: React.MouseEventHandler<HTMLButtonElement> }) {
   return (
     <Button
       variant="secondary"
@@ -27,7 +27,7 @@ type ModelLoaderProps = {
   itemId: string
   file: string
   nodeNum: number
-  reference: RefObject<THREE.Mesh>
+  reference: RefObject<Mesh>
   occlude?: boolean
 }
 
@@ -36,10 +36,10 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
   const { nodes, materials } = useGLTF(file)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [clickTime, setClickTime] = useState<number | null>(null)
-  const [scaledGeometry, setScaledGeometry] = useState<THREE.BufferGeometry | null>(null)
+  const [scaledGeometry, setScaledGeometry] = useState<BufferGeometry | null>(null)
   const [isGeometryReady, setIsGeometryReady] = useState(false)
-  const materialRef = useRef<THREE.Material | null>(null)
-  const meshRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<Material | null>(null)
+  const meshRef = useRef<Mesh>(null)
 
   const item: FurnitureItem | undefined = furniture.find((f) => f.id === itemId)
   if (!item) return null
@@ -74,7 +74,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
 
   const nodesArray = Object.keys(nodes).map((key) => nodes[key])
   const materialsArray = Object.keys(materials).map((key) => materials[key])
-  const geomUpper = nodesArray[nodeNum].geometry
+  const geomUpper = (nodesArray[nodeNum] as Mesh).geometry
   
   function getSizeScale(size: string): number {
     switch (size) {
@@ -87,7 +87,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
   
   useEffect(() => {
     if (materialsArray[0] && !materialRef.current) {
-      const baseMaterial = materialsArray[0]
+      const baseMaterial = materialsArray[0] as MeshStandardMaterial
       const clonedMaterial = baseMaterial.clone()
       
       // Preserve original material properties
@@ -98,11 +98,11 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
       })
 
       // Apply the item's color while preserving material properties
-      clonedMaterial.color = new THREE.Color(item.color)
+      clonedMaterial.color = new Color(item.color)
       
       // Ensure proper material settings
       clonedMaterial.needsUpdate = true
-      clonedMaterial.side = THREE.DoubleSide
+      clonedMaterial.side = DoubleSide
       
       materialRef.current = clonedMaterial
     }
@@ -111,7 +111,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
   // Update material color when item color changes
   useEffect(() => {
     if (materialRef.current) {
-      materialRef.current.color = new THREE.Color(item.color)
+      (materialRef.current as MeshStandardMaterial).color = new Color(item.color)
       materialRef.current.needsUpdate = true
     }
   }, [item.color])
@@ -177,7 +177,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
       {isEditVisible && (
         <Html position={[1, 1, 0]}>
           <BadgeButton
-            onClick={(e: ThreeEvent<PointerEvent>) => {
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.stopPropagation()
               onEditClick(item.id)
             }}

@@ -82,7 +82,7 @@ export default function Experience() {
         {/* Backgorund text */}
         <Image url='/logoExp.svg'
             transparent
-            scale={[texture.image.width / 100, texture.image.height / 100, 1]}
+            scale={[texture.image.width / 100, texture.image.height / 100]}
             position={[0, 2, -4.9]} />
     </>
 }
