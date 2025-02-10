@@ -12,7 +12,6 @@
   "devDependencies": {
     "@types/next": "^8.0.7",
     "@types/node": "^22.7.4",
-    "eslint-config-next": "^15.1.6",
     "tailwindcss": "^3.4.13"
   },
   "dependencies": {

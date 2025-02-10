@@ -6,7 +6,6 @@ import { AppContext } from "../context/AppContext"
 import Placeholder from "./Placeholder"
 import { Button } from "@/components/ui/button"
 import { Pencil } from 'lucide-react'
-import type { ThreeEvent } from "@react-three/fiber"
 import type { FurnitureItem } from "types/furniture"
 
 function BadgeButton({ onClick }: { onClick: React.MouseEventHandler<HTMLButtonElement> }) {
