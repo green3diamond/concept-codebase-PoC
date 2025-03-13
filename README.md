@@ -6,4 +6,4 @@ To quickly run the project:
 
 1. install nodejs
 2. install the dependecies using 'npm install'
-3. start the next.js server using 'npm run dev'
+3. start the vite server using 'npm run dev'
