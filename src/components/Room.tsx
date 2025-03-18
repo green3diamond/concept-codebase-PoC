@@ -1,5 +1,4 @@
 import React from "react"
-import { Mesh } from "three"
 
 interface RoomProps {
   width?: number

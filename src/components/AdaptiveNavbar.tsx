@@ -23,6 +23,7 @@ function AdaptiveNavbar() {
         isRoomSettingsOpen,
         setIsRoomSettingsOpen,
         roomDimensions,
+        setRoomDimensions
     } = useContext(AppContext)
     
     
@@ -139,7 +140,9 @@ function AdaptiveNavbar() {
     );
   };
 
-    const handleRoomDimensionsChange = () => {console.log('change')}
+    const handleRoomDimensionsChange = (dimentions) => {
+      setRoomDimensions(dimentions)
+    }
 
 
     return (

@@ -50,7 +50,7 @@ export const AppContext = createContext<AppContextType>({
     setSelected: () => {},
     hovered: "",
     hover: () =>{},
-    roomDimensions: {width: 10, length: 10, height: 3},
+    roomDimensions: { width: 0, length: 0, height: 0 },
     setRoomDimensions: () => {}
 });
 
@@ -122,7 +122,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     const [roomDimensions, setRoomDimensions] = useState<RoomDimensions>({
     width: 10,
     length: 10,
-    height: 3,
+    height: 5,
     })
 
     return (

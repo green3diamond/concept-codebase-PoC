@@ -1,6 +1,8 @@
 import { useLoader } from "@react-three/fiber"
-import { RepeatWrapping, TextureLoader } from "three"
+import { RepeatWrapping, TextureLoader, Vector3 } from "three"
 import { MeshReflectorMaterial } from "@react-three/drei";
+import { useContext } from "react";
+import { AppContext } from "@/context/AppContext";
 
 /**
 * This function creates a floor mesh using React Three Fiber and Drei library.
@@ -9,6 +11,12 @@ import { MeshReflectorMaterial } from "@react-three/drei";
 * @returns {JSX.Element} A React Three Fiber mesh element representing the floor.
 */
 export default function Floor() {
+
+    const {roomDimensions} = useContext(AppContext)
+    const width = roomDimensions["width"]
+    const length = roomDimensions["length"]
+    const height = roomDimensions["height"]
+
    const name = (type) => `concrete/concrete_1k_${type}.png`;
    /**
     * Load texture maps for the floor using the TextureLoader.
@@ -49,8 +57,7 @@ export default function Floor() {
     metlanessMap.wrapT = RepeatWrapping
 
 
-
-    return <mesh position-y={- 1} rotation-x={- Math.PI * 0.5} scale={10} receiveShadow={true}>
+    return <mesh position-y={- 1} rotation-x={- Math.PI * 0.5} scale={new Vector3(width, length, 0)} receiveShadow={true}>
         <planeGeometry/>
 
         <MeshReflectorMaterial
