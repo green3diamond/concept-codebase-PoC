@@ -1,6 +1,6 @@
 import React from "react"
 import { motion } from "framer-motion"
-import { Sofa, Lamp, Table, RockingChairIcon as ChairRecline, Sparkles, X } from "lucide-react"
+import { Sofa, Lamp, RockingChairIcon as ChairRecline, Sparkles, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface InspireAnimationProps {
@@ -52,32 +52,24 @@ export function InspireAnimation({ onStart, onClose }: InspireAnimationProps) {
         >
           <motion.div
             animate={{
-              rotate: [0, 10, -10, 10, 0],
-              transition: { repeat: Number.POSITIVE_INFINITY, duration: 2 },
+              rotate: [0, 5, -5, 5, 0],
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 4 },
             }}
           >
             <Sofa size={48} />
           </motion.div>
           <motion.div
             animate={{
-              y: [0, -10, 0],
-              transition: { repeat: Number.POSITIVE_INFINITY, duration: 1.5, delay: 0.2 },
+              y: [0, -5, 0],
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 3, delay: 0.2 },
             }}
           >
             <Lamp size={48} />
           </motion.div>
           <motion.div
             animate={{
-              rotate: [0, -10, 10, -10, 0],
-              transition: { repeat: Number.POSITIVE_INFINITY, duration: 2, delay: 0.4 },
-            }}
-          >
-            <Table size={48} />
-          </motion.div>
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              transition: { repeat: Number.POSITIVE_INFINITY, duration: 1.5, delay: 0.6 },
+              scale: [1, 1.05, 1],
+              transition: { repeat: Number.POSITIVE_INFINITY, duration: 3, delay: 0.6 },
             }}
           >
             <ChairRecline size={48} />

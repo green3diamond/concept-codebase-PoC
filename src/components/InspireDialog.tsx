@@ -6,8 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import Image from "next/image"
-import { Sofa, Bed, Table, Lamp, Home, Paintbrush } from "lucide-react"
+import { Sofa, Bed, Table, Lamp, Home, Paintbrush, Check } from "lucide-react"
 import { InspireAnimation } from "./InspireAnimation"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface InspireDialogProps {
   isOpen: boolean
@@ -65,13 +66,29 @@ const roomTypes = [
 ]
 
 const styles = [
-  { value: "modern", label: "Modern" },
-  { value: "traditional", label: "Traditional" },
-  { value: "minimalist", label: "Minimalist" },
-  { value: "rustic", label: "Rustic" },
-  { value: "industrial", label: "Industrial" },
-  { value: "scandinavian", label: "Scandinavian" },
+  "Modern",
+  "Traditional",
+  "Minimalist",
+  "Rustic",
+  "Industrial",
+  "Scandinavian",
+  "Contemporary",
+  "Bohemian",
+  "Mid-Century Modern",
+  "Art Deco",
+  "Coastal",
+  "Farmhouse",
+  "Eclectic",
+  "Transitional",
+  "Zen",
 ]
+
+const transitionProps = {
+  type: "spring",
+  stiffness: 500,
+  damping: 30,
+  mass: 0.5,
+}
 
 export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: InspireDialogProps) {
   const [step, setStep] = useState(0)
@@ -97,6 +114,7 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
     style: "",
     includedItems: [],
   })
+  const [selectedStyles, setSelectedStyles] = useState<string[]>([])
 
   const handleColorPaletteChange = (palette: string) => {
     setSelectedColorPalettes((prev) =>
@@ -139,6 +157,75 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
     return recommendations[selectedRoomType as keyof typeof recommendations] || { furniture: [], decorations: [] }
   }
 
+  const toggleStyle = (style: string) => {
+    setSelectedStyles((prev) => (prev.includes(style) ? prev.filter((s) => s !== style) : [...prev, style]))
+  }
+
+  const StyleSelector = () => (
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold mb-2">What style do you want?</h3>
+      <motion.div className="flex flex-wrap gap-3 overflow-visible" layout transition={transitionProps}>
+        {styles.map((style) => {
+          const isSelected = selectedStyles.includes(style)
+          return (
+            <motion.button
+              key={style}
+              onClick={() => toggleStyle(style)}
+              initial={false}
+              animate={{
+                backgroundColor: isSelected ? "#e0f2fe" : "white",
+                color: isSelected ? "#0284c7" : "#64748b",
+                borderColor: isSelected ? "#0284c7" : "#e2e8f0",
+              }}
+              whileHover={{
+                backgroundColor: isSelected ? "#e0f2fe" : "#f8fafc",
+              }}
+              whileTap={{
+                backgroundColor: isSelected ? "#bae6fd" : "#f1f5f9",
+              }}
+              transition={{
+                backgroundColor: { duration: 0.1 },
+                color: { duration: 0.1 },
+                borderColor: { duration: 0.1 },
+              }}
+              className={`
+                inline-flex items-center px-4 py-2 rounded-full text-sm font-medium
+                whitespace-nowrap overflow-hidden border
+              `}
+            >
+              <motion.div
+                className="relative flex items-center"
+                animate={{
+                  paddingRight: isSelected ? "1.5rem" : "0",
+                }}
+                transition={{
+                  paddingRight: { duration: 0.2 },
+                }}
+              >
+                <span>{style}</span>
+                <AnimatePresence>
+                  {isSelected && (
+                    <motion.span
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute right-0 w-4 h-4"
+                    >
+                      <div className="w-full h-full rounded-full bg-sky-600 flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                      </div>
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </motion.button>
+          )
+        })}
+      </motion.div>
+    </div>
+  )
+
   const questions = [
     {
       title: "What color palettes do you prefer?",
@@ -154,7 +241,7 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
                   {palette.colors.map((color, index) => (
                     <div
                       key={index}
-                      className="w-6 h-6 rounded-full border border-zinc-200 border-gray-300 dark:border-zinc-800"
+                      className="w-6 h-6 rounded-full border border-gray-300"
                       style={{ backgroundColor: color }}
                     />
                   ))}
@@ -182,11 +269,11 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
             <div key={m.value} className="flex items-center justify-between space-x-3">
               <Label htmlFor={`material-${m.value}`} className="flex items-center space-x-3 cursor-pointer flex-grow">
                 <Image
-                  src={m.image || "/placeholder.svg"}
+                  src={m.image || "/placeholder.svg?height=50&width=50"}
                   alt={m.label}
                   width={50}
                   height={50}
-                  className="rounded-md border border-zinc-200 border-gray-300 dark:border-zinc-800"
+                  className="rounded-md border border-gray-300 object-cover"
                 />
                 <div className="font-medium">{m.label}</div>
               </Label>
@@ -225,20 +312,7 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
     },
     {
       title: "What style do you want?",
-      component: (
-        <Select value={style} onValueChange={setStyle}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select style" />
-          </SelectTrigger>
-          <SelectContent>
-            {styles.map((s) => (
-              <SelectItem key={s.value} value={s.value}>
-                {s.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      ),
+      component: <StyleSelector />,
     },
     {
       title: "Recommended Items",
@@ -249,7 +323,7 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
               <h3 className="text-lg font-semibold mb-2">Furniture</h3>
               <div className="grid grid-cols-2 gap-2">
                 {recommendedItems.furniture.map((item) => (
-                  <div key={item} className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+                  <div key={item} className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                     <Checkbox
                       id={`furniture-${item}`}
                       checked={!excludedItems.includes(item)}
@@ -266,7 +340,7 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
               <h3 className="text-lg font-semibold mb-2">Decorations</h3>
               <div className="grid grid-cols-2 gap-2">
                 {recommendedItems.decorations.map((item) => (
-                  <div key={item} className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+                  <div key={item} className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                     <Checkbox
                       id={`decoration-${item}`}
                       checked={!excludedItems.includes(item)}
@@ -294,12 +368,12 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
                 {selections.colorPalettes.map((palette) => {
                   const paletteInfo = colorPalettes.find((p) => p.value === palette)
                   return (
-                    <div key={palette} className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+                    <div key={palette} className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                       <div className="flex space-x-1">
                         {paletteInfo?.colors.map((color, index) => (
                           <div
                             key={index}
-                            className="w-4 h-4 rounded-full border border-zinc-200 border-gray-300 dark:border-zinc-800"
+                            className="w-4 h-4 rounded-full border border-gray-300"
                             style={{ backgroundColor: color }}
                           />
                         ))}
@@ -316,13 +390,13 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
                 {selections.materials.map((material) => {
                   const materialInfo = materials.find((m) => m.value === material)
                   return (
-                    <div key={material} className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+                    <div key={material} className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                       <Image
-                        src={materialInfo?.image || "/placeholder.svg"}
+                        src={materialInfo?.image || "/placeholder.svg?height=24&width=24"}
                         alt={materialInfo?.label || ""}
                         width={24}
                         height={24}
-                        className="rounded-md border border-zinc-200 border-gray-300 dark:border-zinc-800"
+                        className="rounded-md border border-gray-300 object-cover"
                       />
                       <span className="text-sm">{materialInfo?.label}</span>
                     </div>
@@ -332,14 +406,14 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Room Type</h3>
-              <div className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+              <div className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                 {roomTypes.find((r) => r.value === selections.roomType)?.icon}
                 <span className="text-sm">{roomTypes.find((r) => r.value === selections.roomType)?.label}</span>
               </div>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Style</h3>
-              <div className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+              <div className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                 <Paintbrush className="w-4 h-4" />
                 <span className="text-sm">{selections.style}</span>
               </div>
@@ -348,7 +422,7 @@ export function InspireDialog({ isOpen, onClose, onAddProposedFurniture }: Inspi
               <h3 className="text-lg font-semibold mb-2">Included Items</h3>
               <div className="grid grid-cols-2 gap-2">
                 {selections.includedItems.map((item) => (
-                  <div key={item} className="flex items-center space-x-2 bg-zinc-100 rounded-md p-2 dark:bg-zinc-800">
+                  <div key={item} className="flex items-center space-x-2 bg-secondary rounded-md p-2">
                     <span className="text-sm">{item}</span>
                   </div>
                 ))}

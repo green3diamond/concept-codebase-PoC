@@ -23,9 +23,13 @@ function AdaptiveNavbar() {
         isRoomSettingsOpen,
         setIsRoomSettingsOpen,
         roomDimensions,
-        setRoomDimensions
-    } = useContext(AppContext)
-    
+        setRoomDimensions,
+        showMeasurements,
+        toggleMeasurements,
+        scale,
+        backgroundColor,
+        setBackgroundColor
+      } = useContext(AppContext)
     
     const handleDuplicate = (id:string) => {
       const itemToDuplicate = furniture.find((f) => f.id === id)
@@ -167,6 +171,8 @@ function AdaptiveNavbar() {
                 isRoomSettingsOpen={isRoomSettingsOpen}
                 setIsRoomSettingsOpen={setIsRoomSettingsOpen}
                 setIsCouchEditVisible={updateFurnitureEditVisibility}
+                showMeasurements={showMeasurements}
+                toggleMeasurements={toggleMeasurements}
             />
             <FurnitureBrowser
                 isOpen={isFurnitureBrowserOpen}
@@ -183,6 +189,9 @@ function AdaptiveNavbar() {
                     onClose={() => setIsRoomSettingsOpen(false)}
                     initialDimensions={roomDimensions}
                     onDimensionsChange={handleRoomDimensionsChange}
+                    initialColor={backgroundColor}
+                    onColorChange={(color) => setBackgroundColor(color)}
+                    scale={scale}
             />
         </>
     )

@@ -13,6 +13,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { colorOptions, sizeOptions } from "./utils/furnitureOptions"
 import type { FurnitureItem } from "./types/furniture"
 
@@ -90,7 +91,7 @@ export function FloatingMenu({
       className={`fixed top-4 right-4 z-20 transition-all duration-300 ${menuState === "open" ? "translate-x-0" : "translate-x-[calc(100%-0.5rem)]"}`}
     >
       <Card
-        className={`w-[calc(90vw-0.5rem)] max-w-[319.5px] shadow-lg relative ${menuState === "open" ? "z-50" : ""}`}
+        className={`w-[calc(90vw-0.5rem)] max-w-[319.5px] shadow-lg relative ${menuState === "open" ? "z-50" : ""} max-h-[calc(100vh-2rem)]`}
       >
         <Button
           variant="outline"
@@ -103,87 +104,89 @@ export function FloatingMenu({
           <ChevronLeft className={`h-4 w-4 transition-transform ${menuState === "open" ? "rotate-180" : ""}`} />
         </Button>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">Room Designer</CardTitle>
+          <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-primary">Room Designer</CardTitle>
         </CardHeader>
         <CardContent>
-          <Accordion type="single" collapsible value={activeAccordion} onValueChange={setActiveAccordion}>
-            {furniture.map((item) => (
-              <AccordionItem key={item.id} value={item.id}>
-                <AccordionTrigger className="py-4">
-                  <div className="flex justify-between items-center w-full">
-                    <span>
-                      {item.name} #
-                      {furniture.filter((f) => f.type === item.type).findIndex((f) => f.id === item.id) + 1} (
-                      {item.type})
-                    </span>
-                    <Pencil className="h-4 w-4 text-gray-600" />
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="space-y-4 pt-2">
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">Color</h4>
-                      <div className="flex space-x-3">
-                        {colorOptions.map((option, optionIndex) => (
-                          <div key={optionIndex} className="flex flex-col items-center">
-                            <button
-                              className={`w-8 h-8 rounded-full ${option.color} border-2 transition-colors mb-1`}
-                              style={{
-                                borderColor: item.color === option.value ? "black" : "transparent",
-                              }}
-                              onClick={() => onColorChange(item.id, option.value)}
-                              aria-label={`Select ${option.name} color`}
-                            />
-                            <span className="text-xs text-center w-16 break-words">{option.name}</span>
-                          </div>
-                        ))}
+          <ScrollArea className="h-[calc(100vh-10rem)]">
+            <Accordion type="single" collapsible value={activeAccordion} onValueChange={setActiveAccordion}>
+              {furniture.map((item) => (
+                <AccordionItem key={item.id} value={item.id}>
+                  <AccordionTrigger className="py-4">
+                    <div className="flex justify-between items-center w-full">
+                      <span>
+                        {item.name} #
+                        {furniture.filter((f) => f.type === item.type).findIndex((f) => f.id === item.id) + 1} (
+                        {item.type})
+                      </span>
+                      <Pencil className="h-4 w-4 text-gray-600" />
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-4 pt-2">
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">Color</h4>
+                        <div className="flex space-x-3">
+                          {colorOptions.map((option, optionIndex) => (
+                            <div key={optionIndex} className="flex flex-col items-center">
+                              <button
+                                className={`w-8 h-8 rounded-full ${option.color} border-2 transition-colors mb-1`}
+                                style={{
+                                  borderColor: item.color === option.value ? "black" : "transparent",
+                                }}
+                                onClick={() => onColorChange(item.id, option.value)}
+                                aria-label={`Select ${option.name} color`}
+                              />
+                              <span className="text-xs text-center w-16 break-words">{option.name}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">Size</h4>
-                      <RadioGroup
-                        onValueChange={(value) => onSizeChange(item.id, value)}
-                        value={item.size}
-                        className="space-y-2"
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">Size</h4>
+                        <RadioGroup
+                          onValueChange={(value) => onSizeChange(item.id, value)}
+                          value={item.size}
+                          className="space-y-2"
+                        >
+                          {sizeOptions.map((option, optionIndex) => (
+                            <div key={optionIndex} className="flex items-center space-x-2">
+                              <RadioGroupItem value={option.value} id={`${item.id}-${option.value}`} />
+                              <Label htmlFor={`${item.id}-${option.value}`} className="text-sm">
+                                {option.label} - {option.measurement}
+                              </Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </div>
+                      <Button variant="outline" className="w-full justify-start" onClick={() => onRotate(item.id)}>
+                        <RotateCw className="mr-2 h-4 w-4" />
+                        Rotate
+                      </Button>
+                      <Button variant="outline" className="w-full justify-start" onClick={() => onDuplicate(item.id)}>
+                        <Copy className="mr-2 h-4 w-4" />
+                        Duplicate
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setSelectedFurnitureId(item.id)
+                          setIsRemoveDialogOpen(true)
+                        }}
                       >
-                        {sizeOptions.map((option, optionIndex) => (
-                          <div key={optionIndex} className="flex items-center space-x-2">
-                            <RadioGroupItem value={option.value} id={`${item.id}-${option.value}`} />
-                            <Label htmlFor={`${item.id}-${option.value}`} className="text-sm">
-                              {option.label} - {option.measurement}
-                            </Label>
-                          </div>
-                        ))}
-                      </RadioGroup>
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Remove
+                      </Button>
                     </div>
-                    <Button variant="outline" className="w-full justify-start" onClick={() => onRotate(item.id)}>
-                      <RotateCw className="mr-2 h-4 w-4" />
-                      Rotate
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start" onClick={() => onDuplicate(item.id)}>
-                      <Copy className="mr-2 h-4 w-4" />
-                      Duplicate
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => {
-                        setSelectedFurnitureId(item.id)
-                        setIsRemoveDialogOpen(true)
-                      }}
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Remove
-                    </Button>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </ScrollArea>
         </CardContent>
       </Card>
 
-      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen}>
+      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen} className="z-[100]">
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Remove Furniture</DialogTitle>

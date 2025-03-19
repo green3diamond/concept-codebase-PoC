@@ -2,12 +2,15 @@ import Experience from './Experience'
 import { Canvas } from '@react-three/fiber'
 import { Analytics } from "@vercel/analytics/react"
 import AdaptiveNavbar from "./components/AdaptiveNavbar"
+import { AppContext } from './context/AppContext'
+import { useContext } from 'react'
 
 /**
  * The main application component.
  * @returns {JSX.Element} - The JSX element representing the application.
  */
 export default function App() {    
+    const {backgroundColor} = useContext(AppContext)
     
     return (
         <>
@@ -24,6 +27,8 @@ export default function App() {
 
                     }}
                 >
+                    
+                    <color attach="background" args={[backgroundColor]} />
                     <Experience />
                 </Canvas>
                 {/* Custom buttons component */}

@@ -21,18 +21,6 @@ import React from "react"
  * @returns {JSX.Element} - The JSX element for the 3D experience.
  */
 export default function Experience() {
-    // References to the 3D objects
-    const bubbly = useRef()
-    const modSofa = useRef()
-    // Object properties for positioning and scaling
-    const props = {
-        bubbly_x: -2,
-        bubbly_z: 2,
-        cube_x: 2,
-        cube_z: 2,
-        modern_x: 0,
-        modern_z: -3
-    }
     const texture = useLoader(TextureLoader, '/logoExp.svg')
     const { furniture, setFurniture } = useContext(AppContext)
     const groupRef = useRef<THREE.Group>(null)    

@@ -1,3 +1,4 @@
+import { Measurements } from "@/components/Measurements"
 import { AppContext } from "@/context/AppContext"
 import { useContext } from "react"
 
@@ -10,7 +11,7 @@ import { useContext } from "react"
 export default function Walls() {
     // Define material properties for the walls
     const materialProps = { color: '#c7cdb7', roughness: 0.4, metalness: 0.0 }
-    const {roomDimensions} = useContext(AppContext)
+    const {roomDimensions, showMeasurements, scale} = useContext(AppContext)
     const width = roomDimensions["width"]
     const length = roomDimensions["length"]
     const height = roomDimensions["height"]
@@ -47,5 +48,8 @@ export default function Walls() {
             />
             <planeGeometry />
         </mesh>
+
+        {/* Measurements */}
+        {showMeasurements && <Measurements width={width} length={length} height={height} scale={scale} />}
     </>
 }

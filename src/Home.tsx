@@ -13,6 +13,7 @@ export default function Home() {
                             src={smallLogo} 
                             className="logo flex items-center max-h-full w-auto" 
                             alt="Concept logo" 
+                            priority={true}
                         />
                     </div>
                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">

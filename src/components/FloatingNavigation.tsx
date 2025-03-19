@@ -1,5 +1,5 @@
 import React from "react"
-import { Sofa, Sparkles, Home } from "lucide-react"
+import { Sofa, Sparkles, Home, Ruler } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -14,6 +14,8 @@ interface FloatingNavigationProps {
   isRoomSettingsOpen: boolean
   setIsRoomSettingsOpen: (isOpen: boolean) => void
   setIsCouchEditVisible: (isVisible: boolean) => void
+  showMeasurements: boolean
+  toggleMeasurements: () => void
 }
 
 /**
@@ -48,7 +50,9 @@ export function FloatingNavigation({
   setIsInspireDialogOpen,
   isRoomSettingsOpen,
   setIsRoomSettingsOpen,
-  setIsCouchEditVisible
+  setIsCouchEditVisible,
+  showMeasurements,
+  toggleMeasurements,
 }: FloatingNavigationProps) {
   const handleButtonClick = (action: () => void) => {
     setIsCouchEditVisible(false)
@@ -57,20 +61,44 @@ export function FloatingNavigation({
 
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-[95vw] max-w-md">
-      <Card className="shadow-lg">
+      <Card className="shadow-lg border-0">
         <CardContent className="p-2">
-          <div className="flex justify-between space-x-2">
-            <Button variant="outline" size="sm" className="flex-1 flex items-center justify-center" onClick={() => handleButtonClick(() => setIsFurnitureBrowserOpen(true))}>
-              <Sofa className="w-4 h-4 mr-1 sm:mr-2" />
-              <span className="text-xs sm:text-sm">Browse</span>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium"
+              onClick={() => handleButtonClick(() => setIsFurnitureBrowserOpen(true))}
+            >
+              <Sofa className="w-4 h-4" />
+              <span>Browse</span>
             </Button>
-            <Button variant="outline" size="sm" className="flex-1 flex items-center justify-center" onClick={() => handleButtonClick(() => setIsInspireDialogOpen(true))}>
-              <Sparkles className="w-4 h-4 mr-1 sm:mr-2" />
-              <span className="text-xs sm:text-sm">Inspire</span>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium"
+              onClick={() => handleButtonClick(() => setIsInspireDialogOpen(true))}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Inspire</span>
             </Button>
-            <Button variant="outline" size="sm" className="flex-1 flex items-center justify-center" onClick={() => handleButtonClick(() => setIsRoomSettingsOpen(true))}>
-              <Home className="w-4 h-4 mr-1 sm:mr-2" />
-              <span className="text-xs sm:text-sm">Room Settings</span>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium"
+              onClick={() => handleButtonClick(() => setIsRoomSettingsOpen(true))}
+            >
+              <Home className="w-4 h-4" />
+              <span>Room</span>
+            </Button>
+            <Button
+              variant={showMeasurements ? "secondary" : "outline"}
+              size="sm"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium"
+              onClick={toggleMeasurements}
+            >
+              <Ruler className="w-4 h-4" />
+              <span>Measure</span>
             </Button>
           </div>
         </CardContent>

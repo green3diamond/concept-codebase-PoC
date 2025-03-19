@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react'
+import React, { useRef, useCallback, useState, useEffect, useMemo } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
@@ -49,6 +49,7 @@ export function FurnitureItem({
   setIsEditVisible,
   isDialogOpen,
   roomDimensions,
+  name,
 }: FurnitureItemProps) {
   const group = useRef<THREE.Group>(null)
   const { camera, raycaster, gl } = useThree()
@@ -62,19 +63,28 @@ export function FurnitureItem({
   const itemWidth = type === "table" ? 1.2 : length
   const itemDepth = type === "table" ? 0.8 : 1.5
 
+  const calculateRotatedBoundingBox = useCallback(() => {
+    const cos = Math.abs(Math.cos(rotation))
+    const sin = Math.abs(Math.sin(rotation))
+    const rotatedWidth = itemWidth * cos + itemDepth * sin
+    const rotatedDepth = itemWidth * sin + itemDepth * cos
+    return { width: rotatedWidth, depth: rotatedDepth }
+  }, [rotation, itemWidth, itemDepth])
+
   const boundaryConstraints = useMemo(() => {
     const halfRoomWidth = roomDimensions.width / 2
     const halfRoomLength = roomDimensions.length / 2
-    const halfItemWidth = itemWidth / 2
-    const halfItemDepth = itemDepth / 2
+    const { width: rotatedWidth, depth: rotatedDepth } = calculateRotatedBoundingBox()
+    const halfRotatedWidth = rotatedWidth / 2
+    const halfRotatedDepth = rotatedDepth / 2
 
     return {
-      minX: -halfRoomWidth + halfItemWidth,
-      maxX: halfRoomWidth - halfItemWidth,
-      minZ: -halfRoomLength + halfItemDepth,
-      maxZ: halfRoomLength - halfItemDepth,
+      minX: -halfRoomWidth + halfRotatedWidth,
+      maxX: halfRoomWidth - halfRotatedWidth,
+      minZ: -halfRoomLength + halfRotatedDepth,
+      maxZ: halfRoomLength - halfRotatedDepth,
     }
-  }, [roomDimensions, itemWidth, itemDepth])
+  }, [roomDimensions, calculateRotatedBoundingBox])
 
   useFrame(() => {
     if (group.current) {
@@ -94,7 +104,7 @@ export function FurnitureItem({
       dragOffset.current.subVectors(group.current!.position, intersectionPoint)
       onDragStart()
     },
-    [camera, gl, raycaster, onDragStart],
+    [camera, gl, raycaster, onDragStart, plane, intersectionPoint],
   )
 
   const handlePointerUp = useCallback(
@@ -126,7 +136,7 @@ export function FurnitureItem({
         onDrag([newPosition.x, 0, newPosition.z])
       }
     },
-    [isDragging, camera, raycaster, onDrag, boundaryConstraints, plane, intersectionPoint, dragOffset],
+    [isDragging, camera, raycaster, onDrag, boundaryConstraints, plane, intersectionPoint],
   )
 
   const hideButton = useCallback(() => {
@@ -191,31 +201,60 @@ export function FurnitureItem({
           </group>
         )
       default: // Couch
-        return (
-          <group>
-            <mesh position={[0, 0.3, 0]} castShadow receiveShadow>
-              <boxGeometry args={[length, 0.6, 1.2]} />
-              <meshStandardMaterial color={color} />
-            </mesh>
-            <mesh position={[0, 0.9, -0.48]} castShadow>
-              <boxGeometry args={[length, 0.9, 0.24]} />
-              <meshStandardMaterial color={color} />
-            </mesh>
-            <mesh position={[-length / 2 + 0.12, 0.54, 0]} castShadow>
-              <boxGeometry args={[0.24, 0.48, 1.2]} />
-              <meshStandardMaterial color={color} />
-            </mesh>
-            <mesh position={[length / 2 - 0.12, 0.54, 0]} castShadow>
-              <boxGeometry args={[0.24, 0.48, 1.2]} />
-              <meshStandardMaterial color={color} />
-            </mesh>
-          </group>
-        )
+        if (name === "Japanese Couch") {
+          return (
+            <group>
+              <mesh position={[0, 0.25, 0]} castShadow receiveShadow>
+                <boxGeometry args={[length * 0.8, 0.5, 1]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+              <mesh position={[0, 0.6, -0.4]} castShadow>
+                <boxGeometry args={[length * 0.8, 0.7, 0.2]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+              <mesh position={[-length * 0.4 + 0.1, 0.45, 0]} castShadow>
+                <boxGeometry args={[0.2, 0.4, 1]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+              <mesh position={[length * 0.4 - 0.1, 0.45, 0]} castShadow>
+                <boxGeometry args={[0.2, 0.4, 1]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+            </group>
+          )
+        } else {
+          return (
+            <group>
+              <mesh position={[0, 0.3, 0]} castShadow receiveShadow>
+                <boxGeometry args={[length, 0.6, 1.2]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+              <mesh position={[0, 0.9, -0.48]} castShadow>
+                <boxGeometry args={[length, 0.9, 0.24]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+              <mesh position={[-length / 2 + 0.12, 0.54, 0]} castShadow>
+                <boxGeometry args={[0.24, 0.48, 1.2]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+              <mesh position={[length / 2 - 0.12, 0.54, 0]} castShadow>
+                <boxGeometry args={[0.24, 0.48, 1.2]} />
+                <meshStandardMaterial color={color} />
+              </mesh>
+            </group>
+          )
+        }
     }
-  }, [type, color, length])
+  }, [type, color, length, name])
 
   return (
-    <group ref={group} position={position} onClick={(e) => e.stopPropagation()} onPointerMissed={hideButton}>
+    <group
+      ref={group}
+      position={position}
+      rotation={[0, rotation, 0]}
+      onClick={(e) => e.stopPropagation()}
+      onPointerMissed={hideButton}
+    >
       <mesh
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}

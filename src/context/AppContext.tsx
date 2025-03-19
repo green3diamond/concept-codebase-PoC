@@ -23,7 +23,12 @@ interface AppContextType {
     hovered: string,
     hover: (hovered: string) => void,
     roomDimensions: RoomDimensions,
-    setRoomDimensions: (dimensions: RoomDimensions) => void
+    setRoomDimensions: (dimensions: RoomDimensions) => void,
+    showMeasurements: boolean,
+    toggleMeasurements: () => void,
+    scale: number,
+    backgroundColor: string,
+    setBackgroundColor: (color: string) => void,
 }
 
 /**
@@ -51,13 +56,18 @@ export const AppContext = createContext<AppContextType>({
     hovered: "",
     hover: () =>{},
     roomDimensions: { width: 0, length: 0, height: 0 },
-    setRoomDimensions: () => {}
+    setRoomDimensions: () => {},
+    showMeasurements: false,
+    toggleMeasurements: () => {},
+    scale: 1,
+    backgroundColor: "#ffffff",
+    setBackgroundColor: () => {},
 });
 
 
 interface AppProviderProps {
     children: ReactNode
-  }
+}
 
 interface RoomDimensions {
     width: number
@@ -124,6 +134,10 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
     length: 10,
     height: 5,
     })
+    const [showMeasurements, setShowMeasurements] = useState(false)
+    const toggleMeasurements = () => setShowMeasurements(prev => !prev)
+    const [scale, setScale] = useState(1)
+    const [backgroundColor, setBackgroundColor] = useState("#ffffff")
 
     return (
         <AppContext.Provider value={{
@@ -146,7 +160,12 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
             hovered,
             hover,
             roomDimensions,
-            setRoomDimensions
+            setRoomDimensions,
+            showMeasurements,
+            toggleMeasurements, 
+            scale, 
+            backgroundColor,
+            setBackgroundColor
         }}>
             {children}
         </AppContext.Provider>
