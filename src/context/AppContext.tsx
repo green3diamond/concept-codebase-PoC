@@ -1,4 +1,4 @@
-import { createContext, useState, type Dispatch, type SetStateAction } from 'react';
+import { createContext, JSX, useState, type Dispatch, type SetStateAction } from 'react';
 import { ReactNode } from 'react'
 import type { FurnitureItem } from "../../types/furniture"
 import { v4 as uuidv4 } from "uuid"

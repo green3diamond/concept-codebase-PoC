@@ -186,7 +186,7 @@ export function FloatingMenu({
         </CardContent>
       </Card>
 
-      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen} className="z-[100]">
+      <Dialog open={isRemoveDialogOpen} onOpenChange={setIsRemoveDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Remove Furniture</DialogTitle>
