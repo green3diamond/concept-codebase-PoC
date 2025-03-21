@@ -22,7 +22,7 @@ import React from "react"
  */
 export default function Experience() {
     const texture = useLoader(TextureLoader, '/logoExp.svg')
-    const { furniture, setFurniture } = useContext(AppContext)
+    const { furniture } = useContext(AppContext)
     const groupRef = useRef<THREE.Group>(null)    
     const meshRefs = useMemo(() => furniture.map(() => React.createRef<THREE.Mesh>()), [furniture])
 
@@ -54,7 +54,7 @@ export default function Experience() {
             >
             <ModelLoader
                 itemId={item.id}
-                file={item.fileName}
+                url={item.fileName}
                 nodeNum={2}
                 reference={meshRefs[index]}
             />

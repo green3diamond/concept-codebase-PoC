@@ -1,4 +1,4 @@
-import { RefObject, useContext, useEffect, useRef, useState, useCallback } from 'react'
+import { RefObject, useContext, useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { useGLTF, Html } from "@react-three/drei"
 import { useFrame } from '@react-three/fiber'
 import { Mesh, BufferGeometry, Material, Color, DoubleSide, MeshStandardMaterial } from 'three'
@@ -24,23 +24,29 @@ function BadgeButton({ onClick }: { onClick: React.MouseEventHandler<HTMLButtonE
 
 type ModelLoaderProps = {
   itemId: string
-  file: string
+  url: string // Changed from file to url
   nodeNum: number
   reference: RefObject<Mesh>
   occlude?: boolean
 }
 
-export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelLoaderProps) {
+export default function ModelLoader({ itemId, url, nodeNum, reference }: ModelLoaderProps) {
   const { furniture, selected, setSelected, setActiveAccordion, menuState, setMenuState, setIsDragging } = useContext(AppContext)
-  const { nodes, materials } = useGLTF(file)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [clickTime, setClickTime] = useState<number | null>(null)
   const [scaledGeometry, setScaledGeometry] = useState<BufferGeometry | null>(null)
   const [isGeometryReady, setIsGeometryReady] = useState(false)
-  const materialRef = useRef<Material | null>(null)
   const meshRef = useRef<Mesh>(null)
 
-  const item: FurnitureItem | undefined = furniture.find((f) => f.id === itemId)
+  // Use the useGLTF hook with the URL directly
+  // This hook handles caching automatically
+  const { nodes, materials } = useGLTF(url, true) // true enables the loading manager
+
+  const item: FurnitureItem | undefined = useMemo(() => 
+    furniture.find((f) => f.id === itemId), 
+    [furniture, itemId]
+  )
+  
   if (!item) return null
 
   const handlePointerDown = () => {
@@ -61,11 +67,10 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
       setMenuState("open")
       setSelected(id)
       setActiveAccordion(id)
-    }else if (selected === id) {
+    } else if (selected === id) {
       setMenuState("closed")
       setActiveAccordion("")
-    } 
-    else {
+    } else {
       setSelected(id)
       setActiveAccordion(id)
     }
@@ -73,8 +78,11 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
 
   const nodesArray = Object.keys(nodes).map((key) => nodes[key])
   const materialsArray = Object.keys(materials).map((key) => materials[key])
-  const geomUpper = (nodesArray[nodeNum] as Mesh).geometry
-  
+
+  // Check if the node exists at the specified index
+  const nodeExists = nodesArray.length > nodeNum && nodesArray[nodeNum]
+  const geomUpper = nodeExists ? (nodesArray[nodeNum] as Mesh).geometry : null
+
   function getSizeScale(size: string): number {
     switch (size) {
       case "small": return 0.8
@@ -84,11 +92,11 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
     }
   }
   
-  useEffect(() => {
-    if (materialsArray[0] && !materialRef.current) {
+  const materialRef = useMemo(() => {
+    if (materialsArray[0]) {
       const baseMaterial = materialsArray[0] as MeshStandardMaterial
       const clonedMaterial = baseMaterial.clone()
-      
+
       // Preserve original material properties
       Object.keys(baseMaterial).forEach(key => {
         if (key !== 'color' && key !== 'id' && baseMaterial[key] !== undefined) {
@@ -98,22 +106,15 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
 
       // Apply the item's color while preserving material properties
       clonedMaterial.color = new Color(item.color)
-      
+
       // Ensure proper material settings
       clonedMaterial.needsUpdate = true
       clonedMaterial.side = DoubleSide
       
-      materialRef.current = clonedMaterial
+      return clonedMaterial
     }
+    return null
   }, [materialsArray, item.color])
-
-  // Update material color when item color changes
-  useEffect(() => {
-    if (materialRef.current) {
-      (materialRef.current as MeshStandardMaterial).color = new Color(item.color)
-      materialRef.current.needsUpdate = true
-    }
-  }, [item.color])
 
   const initializeGeometry = useCallback(() => {
     if (!geomUpper) return
@@ -137,8 +138,10 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
   }, [geomUpper, item.originalSize, item.size, item.name])
 
   useEffect(() => {
-    initializeGeometry()
-  }, [initializeGeometry])
+    if (geomUpper && !isGeometryReady) {
+      initializeGeometry()
+    }
+  }, [geomUpper, isGeometryReady, initializeGeometry])
 
   useEffect(() => {
     if (reference.current) {
@@ -147,7 +150,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
   }, [item.rotation, reference])
 
   useFrame(() => {
-    if (meshRef.current && !isGeometryReady) {
+    if (meshRef.current && !isGeometryReady && geomUpper) {
       initializeGeometry()
     }
   })
@@ -171,7 +174,7 @@ export default function ModelLoader({ itemId, file, nodeNum, reference }: ModelL
         castShadow={true} 
         name={item.name} 
         geometry={scaledGeometry}
-        material={materialRef.current}
+        material={materialRef}
       />
       {isEditVisible && (
         <Html position={[1, 1, 0]}>

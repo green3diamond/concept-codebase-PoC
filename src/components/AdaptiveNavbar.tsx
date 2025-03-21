@@ -126,7 +126,7 @@ function AdaptiveNavbar() {
           name: item,
           isEditVisible: false,
           type: "sofa",
-          fileName: './bubblyRot2.glb'
+          fileName: 'https://rxsiaf6menzod7oh.public.blob.vercel-storage.com/bubblyRot2-WGrWNoV0DdXJaXAdtul0D3AFVlgNmo.glb'
         })
       })
     },

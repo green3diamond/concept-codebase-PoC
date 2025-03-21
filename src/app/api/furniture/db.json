@@ -16,7 +16,7 @@
         "nickname": "bubbly",
         "type": "sofa",
         "originalSize": 1.4,
-        "fileName": "./bubblyRot2.glb",
+        "fileName": "https://rxsiaf6menzod7oh.public.blob.vercel-storage.com/bubblyRot2-WGrWNoV0DdXJaXAdtul0D3AFVlgNmo.glb",
         "image": "./placeholder.jpg"
       },
       {
@@ -27,7 +27,7 @@
         "nickname": "modSofa",
         "type": "sofa",
         "originalSize": 2.5,
-        "fileName": "./modernSofa2.glb",
+        "fileName": "https://rxsiaf6menzod7oh.public.blob.vercel-storage.com/modernSofa2-BdHOUQurxsUu7UoN2nJPqHgDJGdR9U.glb",
         "image": "./placeholder.jpg"
       }
     ],

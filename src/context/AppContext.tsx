@@ -113,7 +113,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
             isEditVisible: false,
             nickname: "bubbly",
             type: "sofa",
-            fileName: './bubblyRot2.glb'
+            fileName: 'https://rxsiaf6menzod7oh.public.blob.vercel-storage.com/bubblyRot2-WGrWNoV0DdXJaXAdtul0D3AFVlgNmo.glb'
         },
         {
             id: uuidv4(),
@@ -126,7 +126,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
             isEditVisible: false,
             nickname: "modSofa",
             type: "sofa",
-            fileName: './modernSofa2.glb'
+            fileName: 'https://rxsiaf6menzod7oh.public.blob.vercel-storage.com/modernSofa2-BdHOUQurxsUu7UoN2nJPqHgDJGdR9U.glb'
         }
       ])
     const [roomDimensions, setRoomDimensions] = useState<RoomDimensions>({
